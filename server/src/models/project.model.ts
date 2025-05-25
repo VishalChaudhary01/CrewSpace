@@ -18,12 +18,12 @@ const projectSchema = new Schema<ProjectDocument>(
     description: { type: String },
     workspace: {
       type: Schema.Types.ObjectId,
-      ref: "Workspace",
+      ref: "WorkspaceModel",
       required: true,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "UserModel",
       required: true,
     },
   },
@@ -32,7 +32,7 @@ const projectSchema = new Schema<ProjectDocument>(
   },
 );
 
-export const Project = mongoose.model<ProjectDocument>(
-  "Project",
+export const ProjectModel = mongoose.model<ProjectDocument>(
+  "ProjectModel",
   projectSchema,
 );

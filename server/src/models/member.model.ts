@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { RoleDocument } from "./Role";
+import { RoleDocument } from "./role.model";
 
 export interface MemberDocument extends Document {
   userId: mongoose.Types.ObjectId;
@@ -12,17 +12,17 @@ const memberSchema = new Schema<MemberDocument>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "UserModel",
       required: true,
     },
     workspaceId: {
       type: Schema.Types.ObjectId,
-      ref: "Workspace",
+      ref: "WorkspaceModel",
       required: true,
     },
     role: {
       type: Schema.Types.ObjectId,
-      ref: "Role",
+      ref: "RoleModel",
       required: true,
     },
     joinedAt: {
@@ -35,4 +35,7 @@ const memberSchema = new Schema<MemberDocument>(
   },
 );
 
-export const Member = mongoose.model<MemberDocument>("Member", memberSchema);
+export const MemberModel = mongoose.model<MemberDocument>(
+  "MemberModel",
+  memberSchema,
+);

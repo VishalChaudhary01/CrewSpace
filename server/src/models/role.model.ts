@@ -34,4 +34,4 @@ const roleSchema = new Schema<RoleDocument>(
   },
 );
 
-export const Role = mongoose.model<RoleDocument>("Role", roleSchema);
+export const RoleModel = mongoose.model<RoleDocument>("RoleModel", roleSchema);

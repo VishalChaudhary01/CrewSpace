@@ -16,7 +16,7 @@ const workspaceSchema = new Schema<WorkspaceDocument>(
     description: { type: String },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "UserModel",
       required: true,
     },
     inviteCode: {
@@ -35,7 +35,7 @@ workspaceSchema.methods.resetInviteCode = function () {
   this.inviteCode = generateInviteCode();
 };
 
-export const Workspace = mongoose.model<WorkspaceDocument>(
-  "Workspace",
+export const WorkspaceModel = mongoose.model<WorkspaceDocument>(
+  "WorkspaceModel",
   workspaceSchema,
 );

@@ -36,7 +36,7 @@ const userSchema = new Schema<UserDocument>(
     },
     currentWorkspace: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Workspace",
+      ref: "WorkspaceModel",
     },
     isActive: { type: Boolean, default: true },
     lastLogin: { type: Date, default: null },
@@ -65,4 +65,4 @@ userSchema.methods.comparePassword = async function (value: string) {
   return compareValue(value, this.password);
 };
 
-export const User = mongoose.model<UserDocument>("User", userSchema);
+export const UserModel = mongoose.model<UserDocument>("UserModel", userSchema);

@@ -38,12 +38,12 @@ const taskSchema = new Schema<TaskDocument>(
     },
     project: {
       type: Schema.Types.ObjectId,
-      ref: "Project",
+      ref: "ProjectModel",
       required: true,
     },
     workspace: {
       type: Schema.Types.ObjectId,
-      ref: "Workspace",
+      ref: "WorkspaceModel",
       required: true,
     },
     status: {
@@ -58,12 +58,12 @@ const taskSchema = new Schema<TaskDocument>(
     },
     assignedTo: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "UserModel",
       default: null,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "UserModel",
       required: true,
     },
     dueDate: {
@@ -76,4 +76,4 @@ const taskSchema = new Schema<TaskDocument>(
   },
 );
 
-export const Task = mongoose.model<TaskDocument>("Task", taskSchema);
+export const TaskModel = mongoose.model<TaskDocument>("TaskModel", taskSchema);
