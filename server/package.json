@@ -23,6 +23,7 @@
     "helmet": "^8.1.0",
     "module-alias": "^2.2.3",
     "mongoose": "^8.15.0",
+    "uuid": "^11.1.0",
     "zod": "^3.24.4"
   },
   "devDependencies": {
