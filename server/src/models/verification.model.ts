@@ -15,7 +15,6 @@ const verificationSchema = new Schema<VerificationDocument>({
     type: Schema.Types.ObjectId,
     ref: "UserModel",
     required: true,
-    index: true,
   },
   code: {
     type: String,
@@ -24,7 +23,6 @@ const verificationSchema = new Schema<VerificationDocument>({
   token: {
     type: String,
     default: null,
-    index: true,
   },
   type: {
     type: String,
