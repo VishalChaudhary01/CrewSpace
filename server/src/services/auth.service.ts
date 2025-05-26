@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import { UserModel } from "@/models/user.model";
-import { Verification } from "@/enums/verification.enum";
+import {
+  EMAIL_VERIFICATION_CODE_RESENT_TIME,
+  Verification,
+} from "@/enums/verification.enum";
 import { BadRequestError } from "@/errors/bad-request.error";
 import { VerificationModel } from "@/models/verification.model";
 import { generateResetToken, generateVerificationCode } from "@/utils/crypto";
@@ -11,6 +14,7 @@ import { Roles } from "@/enums/role.enum";
 import { NotFoundError } from "@/errors/not-found.error";
 import { MemberModel } from "@/models/member.model";
 import { AppError } from "@/errors/app.error";
+import { VERIFICATION_EXPIRES_AT } from "@/utils/date-time";
 
 export const signupService = async (data: SignupDto) => {
   const userExist = await UserModel.findOne({ email: data.email });
@@ -48,12 +52,11 @@ export const signupService = async (data: SignupDto) => {
     await member.save({ session });
 
     const verificationCode = generateVerificationCode();
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
     const verification = new VerificationModel({
       userId: user._id,
       code: verificationCode,
-      expiresAt,
+      expiresAt: VERIFICATION_EXPIRES_AT,
       type: Verification.EMAIL_VERIFICATION,
     });
     await verification.save({ session });
@@ -103,6 +106,48 @@ export const signinService = async (data: SigninDto) => {
   };
 };
 
+export const resendVerificationCodeService = async (
+  unverifiedUserId: string,
+) => {
+  const unverifiedUser = await UserModel.findById(unverifiedUserId);
+  if (!unverifiedUser) {
+    throw new BadRequestError("User not found");
+  }
+
+  const verification = await VerificationModel.findOne({
+    userId: unverifiedUserId,
+    type: Verification.EMAIL_VERIFICATION,
+  });
+
+  if (!verification || verification.expiresAt < new Date()) {
+    throw new BadRequestError("No valid verification record found");
+  }
+
+  const now = Date.now();
+  const updatedAt = new Date(verification.updatedAt).getTime();
+
+  const isTooEarlyToResend =
+    now - updatedAt < EMAIL_VERIFICATION_CODE_RESENT_TIME;
+
+  if (isTooEarlyToResend) {
+    throw new BadRequestError(
+      "Too many requests. Please wait before retrying.",
+    );
+  }
+
+  const newCode = generateVerificationCode();
+
+  await verification.updateOne({
+    code: newCode,
+    expiresAt: VERIFICATION_EXPIRES_AT,
+  });
+
+  return {
+    userEmail: unverifiedUser.email,
+    verificationCode: newCode,
+  };
+};
+
 export const verifyVerificationCodeService = async (code: string) => {
   const verification = await VerificationModel.findOne({
     code,
@@ -146,7 +191,6 @@ export const resetPasswordRequestService = async (email: string) => {
   }
 
   const token = generateResetToken();
-  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
   const session = await mongoose.startSession();
 
@@ -161,7 +205,7 @@ export const resetPasswordRequestService = async (email: string) => {
     const verification = new VerificationModel({
       userId: user._id,
       token,
-      expiresAt,
+      expiresAt: VERIFICATION_EXPIRES_AT,
       type: Verification.PASSWORD_RESET,
     });
 
@@ -186,8 +230,6 @@ export const resetPasswordService = async (token: string, password: string) => {
     token,
     type: Verification.PASSWORD_RESET,
   });
-
-  console.log("verificationinot::", verification);
 
   if (!verification || verification.expiresAt < new Date()) {
     throw new BadRequestError("Invalid or expired token");

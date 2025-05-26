@@ -3,7 +3,9 @@ import { config } from "@/config/env.config";
 import { StatusCode } from "@/config/http.config";
 import {
   clearAuthenticationCookies,
+  getEmailVerificationCookie,
   setAuthenticationCookies,
+  setEmailVerificationCookie,
 } from "@/utils/cookie";
 import { signJwt } from "@/utils/jwt";
 import {
@@ -12,6 +14,7 @@ import {
   sendVerificationEmail,
 } from "@/mailtrap/emails";
 import {
+  resendVerificationCodeService,
   resetPasswordRequestService,
   resetPasswordService,
   signinService,
@@ -25,6 +28,7 @@ import {
   signupSchema,
   verifyVerificationCodeSchema,
 } from "@/validators/auth.validator";
+import { BadRequestError } from "@/errors/bad-request.error";
 
 export const signup = async (req: Request, res: Response) => {
   const data = signupSchema.parse(req.body);
@@ -32,6 +36,8 @@ export const signup = async (req: Request, res: Response) => {
   const { user, verificationCode } = await signupService(data);
 
   sendVerificationEmail(user.email, verificationCode);
+
+  setEmailVerificationCookie(res, user._id as string);
 
   res.status(StatusCode.CREATED).json({
     message: "User registered successfully. Please verify your email.",
@@ -45,13 +51,30 @@ export const signin = async (req: Request, res: Response) => {
 
   const token = signJwt({ userId: user._id as string });
 
-  setAuthenticationCookies({ res, token });
+  setAuthenticationCookies(res, token);
 
   res.status(StatusCode.OK).json({
     message: "Signin successful",
     data: {
       user,
     },
+  });
+};
+
+export const resendVerificationCode = async (req: Request, res: Response) => {
+  const unverifiedUserId = getEmailVerificationCookie(req);
+
+  if (!unverifiedUserId) {
+    throw new BadRequestError("Missing verification context");
+  }
+
+  const { userEmail, verificationCode } =
+    await resendVerificationCodeService(unverifiedUserId);
+
+  sendVerificationEmail(userEmail, verificationCode);
+
+  res.status(StatusCode.OK).json({
+    message: "Verification code resent to your email",
   });
 };
 

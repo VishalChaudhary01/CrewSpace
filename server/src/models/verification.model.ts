@@ -8,36 +8,36 @@ export interface VerificationDocument extends Document {
   type: VerificationType;
   expiresAt: Date;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-const verificationSchema = new Schema<VerificationDocument>({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "UserModel",
-    required: true,
+const verificationSchema = new Schema<VerificationDocument>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "UserModel",
+      required: true,
+    },
+    code: {
+      type: String,
+      default: null,
+    },
+    token: {
+      type: String,
+      default: null,
+    },
+    type: {
+      type: String,
+      enum: Object.values(Verification),
+      required: true,
+    },
+    expiresAt: {
+      type: Date,
+      required: true,
+    },
   },
-  code: {
-    type: String,
-    default: null,
-  },
-  token: {
-    type: String,
-    default: null,
-  },
-  type: {
-    type: String,
-    enum: Object.values(Verification),
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: () => new Date(),
-  },
-  expiresAt: {
-    type: Date,
-    required: true,
-  },
-});
+  { timestamps: true },
+);
 
 export const VerificationModel = mongoose.model(
   "VerificationModel",
