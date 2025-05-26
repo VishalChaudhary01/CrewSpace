@@ -12,9 +12,9 @@
     "test:watch": "jest --watch"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vishal Chaudhary",
   "license": "ISC",
-  "description": "",
+  "description": "Server of TeamSync application",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
