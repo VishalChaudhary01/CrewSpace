@@ -15,6 +15,7 @@ import {
   VERIFICATION_EXPIRES_AT,
 } from "@/utils/date-time";
 import { VerificationEnum } from "@/enums/verification.enum";
+import { logError } from "@/utils/logger";
 
 export const signupService = async (data: SignupDto) => {
   const userExist = await UserModel.findOne({ email: data.email });
@@ -74,6 +75,7 @@ export const signupService = async (data: SignupDto) => {
       verificationCode: verification.code,
     };
   } catch (error) {
+    logError("Error during signupService", error);
     await session.abortTransaction();
     throw error;
   } finally {
@@ -173,6 +175,7 @@ export const verifyVerificationCodeService = async (code: string) => {
 
     await session.commitTransaction();
   } catch (error) {
+    logError("Error in verifyVerificationCodeService", error);
     await session.abortTransaction();
     throw error;
   } finally {
@@ -213,6 +216,7 @@ export const resetPasswordRequestService = async (email: string) => {
 
     await session.commitTransaction();
   } catch (error) {
+    logError("Error in resetPasswordRequestService", error);
     await session.abortTransaction();
     throw error;
   } finally {
@@ -256,6 +260,7 @@ export const resetPasswordService = async (token: string, password: string) => {
 
     await session.commitTransaction();
   } catch (error) {
+    logError("Error in resetPasswordService", error);
     await session.abortTransaction();
     throw error;
   } finally {

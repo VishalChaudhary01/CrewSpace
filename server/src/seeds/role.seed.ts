@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
 import { RoleModel } from "@/models/role.model";
 import { RolePermissions } from "@/utils/role-premissions";
+import { logError, logger } from "@/utils/logger";
 
 export const seedRoles = async () => {
   const existingRoles = await RoleModel.countDocuments();
   if (existingRoles > 0) {
-    console.log("🛑 Roles already exist, skipping seeding.");
+    logger.info("Roles already exist, skipping seeding.");
     return;
   }
 
   const session = await mongoose.startSession();
   try {
-    console.log("🌱 Seeding roles....");
+    logger.info("Seeding roles....");
     session.startTransaction();
 
     for (const roleName in RolePermissions) {
@@ -23,14 +24,14 @@ export const seedRoles = async () => {
         permissions: permission,
       });
       await newRole.save({ session });
-      console.log(`✅ Role ${role} added with permissions.`);
+      logger.info(`Role ${role} added with permissions.`);
     }
 
     await session.commitTransaction();
-    console.log("🎉 Role Seeding completed!");
+    logger.info("🎉 Role Seeding completed!");
   } catch (error) {
     await session.abortTransaction();
-    console.error("❌ Error during Role seed:", error);
+    logError("Error during Role seed", error);
   } finally {
     session.endSession();
   }

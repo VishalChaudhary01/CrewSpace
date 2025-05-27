@@ -5,6 +5,7 @@ import { AppError } from "@/errors/app.error";
 import { StatusCode } from "@/config/http.config";
 import { formatZodError } from "@/utils/format-zod-error";
 import { getErrorMessage } from "@/utils/get-error-message";
+import { logError } from "@/utils/logger";
 
 export const errorHandler: ErrorRequestHandler = (
   error,
@@ -12,8 +13,7 @@ export const errorHandler: ErrorRequestHandler = (
   res,
   _next,
 ): any => {
-  console.error(`Error occured on PATH: ${req.path}`);
-  console.error(error);
+  logError(`Error occured on PATH: ${req.path}`, error);
 
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({
