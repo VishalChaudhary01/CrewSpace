@@ -3,16 +3,17 @@ import { config } from "@/config/env.config";
 import { StatusCode } from "@/config/http.config";
 import {
   clearAuthenticationCookies,
+  clearEmailVerificationCookie,
   getEmailVerificationCookie,
   setAuthenticationCookies,
   setEmailVerificationCookie,
 } from "@/utils/cookie";
 import { signJwt } from "@/utils/jwt";
 import {
-  sendResetPasswordRequestEmail,
-  sendResetPasswordSuccessEmail,
   sendVerificationEmail,
-} from "@/mailtrap/emails";
+  sendResetPasswordEmail,
+  sendResetPasswordSuccessEmail,
+} from "@/emails/email-service";
 import {
   resendVerificationCodeService,
   resetPasswordRequestService,
@@ -35,7 +36,7 @@ export const signup = async (req: Request, res: Response) => {
 
   const { user, verificationCode } = await signupService(data);
 
-  sendVerificationEmail(user.email, verificationCode);
+  await sendVerificationEmail(user.email, verificationCode);
 
   setEmailVerificationCookie(res, user._id as string);
 
@@ -71,7 +72,7 @@ export const resendVerificationCode = async (req: Request, res: Response) => {
   const { userEmail, verificationCode } =
     await resendVerificationCodeService(unverifiedUserId);
 
-  sendVerificationEmail(userEmail, verificationCode);
+  await sendVerificationEmail(userEmail, verificationCode);
 
   res.status(StatusCode.OK).json({
     message: "Verification code resent to your email",
@@ -82,6 +83,8 @@ export const verifyVerificationCode = async (req: Request, res: Response) => {
   const { code } = verifyVerificationCodeSchema.parse(req.body);
 
   const { user } = await verifyVerificationCodeService(code);
+
+  clearEmailVerificationCookie(res);
 
   res.status(StatusCode.OK).json({
     message: "Email verified successfully, now you can login",
@@ -97,7 +100,7 @@ export const resetPasswordRequest = async (req: Request, res: Response) => {
   const { user, token } = await resetPasswordRequestService(email);
   const resetURL = `${config.FRONTEND_URL}/reset-password/${token}`;
 
-  sendResetPasswordRequestEmail(user.email, resetURL);
+  await sendResetPasswordEmail(user.email, resetURL);
 
   res.status(StatusCode.OK).json({
     message: "A password reset link has send to your email",
@@ -110,8 +113,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
   const { user } = await resetPasswordService(token, password);
 
-  console.log("Reseponse: ", user);
-  sendResetPasswordSuccessEmail(user.email);
+  await sendResetPasswordSuccessEmail(user.email);
 
   res.status(StatusCode.OK).json({
     message: "Password reset successfully",

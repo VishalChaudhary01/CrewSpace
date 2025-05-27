@@ -34,3 +34,6 @@ export const setEmailVerificationCookie = (
 
 export const getEmailVerificationCookie = (req: Request): string | undefined =>
   req.cookies?.[config.PENDING_EMAIL_VERIFICATION_USER_ID];
+
+export const clearEmailVerificationCookie = (res: Response): Response =>
+  res.clearCookie(config.PENDING_EMAIL_VERIFICATION_USER_ID);

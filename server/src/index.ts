@@ -1,4 +1,5 @@
 import "module-alias/register";
+import "./emails/email-worker";
 import { createServer } from "./create-server";
 import { config } from "./config/env.config";
 import { connectMongoDB } from "./config/mongoose.config";

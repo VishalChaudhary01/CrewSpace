@@ -1,11 +1,14 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { Verification, VerificationType } from "@/enums/verification.enum";
+import {
+  VerificationEnum,
+  VerificationEnumType,
+} from "@/enums/verification.enum";
 
 export interface VerificationDocument extends Document {
   userId: mongoose.Types.ObjectId;
   code?: string;
   token?: string;
-  type: VerificationType;
+  type: VerificationEnumType;
   expiresAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -28,7 +31,7 @@ const verificationSchema = new Schema<VerificationDocument>(
     },
     type: {
       type: String,
-      enum: Object.values(Verification),
+      enum: Object.values(VerificationEnum),
       required: true,
     },
     expiresAt: {

@@ -7,3 +7,5 @@ export const AUTHENTICATION_COOKIE_EXPIRES_AT = new Date(
 export const EMAIL_VERIFICATION_COOKIE_EXPIRES_AT = new Date(
   Date.now() + 5 * 60 * 1000,
 ); // 5 minutes
+
+export const EMAIL_VERIFICATION_CODE_RESENT_TIME = 60 * 1000; // 30 sec.

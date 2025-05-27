@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 import { UserModel } from "@/models/user.model";
-import {
-  EMAIL_VERIFICATION_CODE_RESENT_TIME,
-  Verification,
-} from "@/enums/verification.enum";
 import { BadRequestError } from "@/errors/bad-request.error";
 import { VerificationModel } from "@/models/verification.model";
 import { generateResetToken, generateVerificationCode } from "@/utils/crypto";
@@ -14,7 +10,11 @@ import { Roles } from "@/enums/role.enum";
 import { NotFoundError } from "@/errors/not-found.error";
 import { MemberModel } from "@/models/member.model";
 import { AppError } from "@/errors/app.error";
-import { VERIFICATION_EXPIRES_AT } from "@/utils/date-time";
+import {
+  EMAIL_VERIFICATION_CODE_RESENT_TIME,
+  VERIFICATION_EXPIRES_AT,
+} from "@/utils/date-time";
+import { VerificationEnum } from "@/enums/verification.enum";
 
 export const signupService = async (data: SignupDto) => {
   const userExist = await UserModel.findOne({ email: data.email });
@@ -57,7 +57,7 @@ export const signupService = async (data: SignupDto) => {
       userId: user._id,
       code: verificationCode,
       expiresAt: VERIFICATION_EXPIRES_AT,
-      type: Verification.EMAIL_VERIFICATION,
+      type: VerificationEnum.EMAIL_VERIFICATION,
     });
     await verification.save({ session });
 
@@ -116,7 +116,7 @@ export const resendVerificationCodeService = async (
 
   const verification = await VerificationModel.findOne({
     userId: unverifiedUserId,
-    type: Verification.EMAIL_VERIFICATION,
+    type: VerificationEnum.EMAIL_VERIFICATION,
   });
 
   if (!verification || verification.expiresAt < new Date()) {
@@ -151,7 +151,7 @@ export const resendVerificationCodeService = async (
 export const verifyVerificationCodeService = async (code: string) => {
   const verification = await VerificationModel.findOne({
     code,
-    type: Verification.EMAIL_VERIFICATION,
+    type: VerificationEnum.EMAIL_VERIFICATION,
   });
 
   if (!verification || verification.expiresAt < new Date()) {
@@ -199,14 +199,14 @@ export const resetPasswordRequestService = async (email: string) => {
 
     await VerificationModel.deleteMany({
       userId: user._id,
-      type: Verification.PASSWORD_RESET,
+      type: VerificationEnum.PASSWORD_RESET,
     }).session(session);
 
     const verification = new VerificationModel({
       userId: user._id,
       token,
       expiresAt: VERIFICATION_EXPIRES_AT,
-      type: Verification.PASSWORD_RESET,
+      type: VerificationEnum.PASSWORD_RESET,
     });
 
     await verification.save({ session });
@@ -228,7 +228,7 @@ export const resetPasswordRequestService = async (email: string) => {
 export const resetPasswordService = async (token: string, password: string) => {
   const verification = await VerificationModel.findOne({
     token,
-    type: Verification.PASSWORD_RESET,
+    type: VerificationEnum.PASSWORD_RESET,
   });
 
   if (!verification || verification.expiresAt < new Date()) {
@@ -251,7 +251,7 @@ export const resetPasswordService = async (token: string, password: string) => {
 
     await VerificationModel.deleteMany({
       userId: user._id,
-      type: Verification.PASSWORD_RESET,
+      type: VerificationEnum.PASSWORD_RESET,
     }).session(session);
 
     await session.commitTransaction();
