@@ -8,6 +8,7 @@ import {
   signout,
   resendVerificationCode,
 } from "@/controllers/auth.controller";
+import { authRequire } from "@/middlewares/auth-require.middleware";
 
 const authRoutes = Router();
 
@@ -18,7 +19,6 @@ authRoutes.post("/verify-verification-code", verifyVerificationCode);
 authRoutes.post("/reset-password-request", resetPasswordRequest);
 authRoutes.post("/reset-password/:token", resetPassword);
 
-// Todo: need to add auth-require middleware
-authRoutes.post("/signout", signout);
+authRoutes.post("/signout", authRequire, signout);
 
 export default authRoutes;

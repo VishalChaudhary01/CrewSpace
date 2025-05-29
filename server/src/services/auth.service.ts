@@ -37,6 +37,9 @@ export const signupService = async (data: SignupDto) => {
     });
     await workspace.save({ session });
 
+    user.currentWorkspace = workspace._id;
+    await user.save({ session });
+
     const ownerRole = await RoleModel.findOne({ name: Roles.OWNER }).session(
       session,
     );

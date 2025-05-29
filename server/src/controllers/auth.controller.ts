@@ -40,7 +40,7 @@ export const signup = async (req: Request, res: Response) => {
 
   await sendVerificationEmail(user.email, verificationCode);
 
-  setEmailVerificationCookie(res, user._id as string);
+  setEmailVerificationCookie(res, user._id.toString());
 
   logger.info(`Verification email sent to: ${user.email}`);
   res.status(StatusCode.CREATED).json({
@@ -54,7 +54,7 @@ export const signin = async (req: Request, res: Response) => {
 
   const { user } = await signinService(data);
 
-  const token = signJwt({ userId: user._id as string });
+  const token = signJwt({ userId: user._id.toString() });
 
   setAuthenticationCookies(res, token);
 

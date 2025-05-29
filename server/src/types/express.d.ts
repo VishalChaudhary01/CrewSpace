@@ -5,7 +5,6 @@ declare global {
     interface Request {
       user?: {
         _id: string;
-        currentWorkspace: string;
       };
     }
   }
