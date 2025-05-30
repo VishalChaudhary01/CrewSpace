@@ -2,7 +2,7 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import { config } from "@/config/env.config";
 
-type Unit = "s" | "m" | "h" | "d";
+type Unit = "s" | "M" | "H" | "D";
 type StringValues = `${number}${Unit}`;
 
 export type TPayload = {

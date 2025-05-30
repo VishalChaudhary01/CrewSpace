@@ -29,3 +29,17 @@ export const verificationCodeSchema = z
   .trim()
   .length(6, { message: "Verification code must be exactly 6 digits" })
   .regex(/^\d{6}$/, { message: "Verification code must contain only digits" });
+
+export const titleSchema = z
+  .string()
+  .trim()
+  .min(1, "Title is required")
+  .max(50, "Title should be less then 50 characters");
+
+export const descriptionSchema = z
+  .string()
+  .trim()
+  .max(500, "Description should be less then 500 characters")
+  .optional();
+
+export const idSchema = z.string().trim().min(1, "Id is Required");
