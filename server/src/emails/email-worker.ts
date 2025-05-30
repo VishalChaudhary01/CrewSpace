@@ -14,8 +14,6 @@ const emailWorker = new Worker(
       subject,
       html,
     });
-
-    logger.info("Email send to: ", to);
   },
   { connection },
 );

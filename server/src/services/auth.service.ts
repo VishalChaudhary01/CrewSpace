@@ -1,21 +1,25 @@
 import mongoose from "mongoose";
-import { UserModel } from "@/models/user.model";
-import { BadRequestError } from "@/errors/bad-request.error";
-import { VerificationModel } from "@/models/verification.model";
-import { generateResetToken, generateVerificationCode } from "@/utils/crypto";
-import { SigninDto, SignupDto } from "@/validators/auth.validator";
-import { WorkspaceModel } from "@/models/wrokspace.model";
+import { UserDocument, UserModel } from "@/models/user.model";
 import { RoleModel } from "@/models/role.model";
-import { Roles } from "@/enums/role.enum";
-import { NotFoundError } from "@/errors/not-found.error";
 import { MemberModel } from "@/models/member.model";
+import { WorkspaceModel } from "@/models/wrokspace.model";
+import {
+  VerificationDocument,
+  VerificationModel,
+} from "@/models/verification.model";
 import { AppError } from "@/errors/app.error";
+import { NotFoundError } from "@/errors/not-found.error";
+import { BadRequestError } from "@/errors/bad-request.error";
+import { Roles } from "@/enums/role.enum";
+import { VerificationEnum } from "@/enums/verification.enum";
+import { logError } from "@/utils/logger";
 import {
   EMAIL_VERIFICATION_CODE_RESENT_TIME,
   VERIFICATION_EXPIRES_AT,
 } from "@/utils/date-time";
-import { VerificationEnum } from "@/enums/verification.enum";
-import { logError } from "@/utils/logger";
+import { generateResetToken, generateVerificationCode } from "@/utils/crypto";
+import { SigninDto, SignupDto } from "@/validators/auth.validator";
+import { getUserByIdService } from "./user.service";
 
 export const signupService = async (data: SignupDto) => {
   const userExist = await UserModel.findOne({ email: data.email });
@@ -23,12 +27,21 @@ export const signupService = async (data: SignupDto) => {
     throw new BadRequestError("Email is already registered");
   }
 
+  let user: UserDocument | null = null;
+  let verification: VerificationDocument | null = null;
+
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
 
-    const user = new UserModel(data);
-    await user.save({ session });
+    user = new UserModel(data);
+
+    const ownerRole = await RoleModel.findOne({ name: Roles.OWNER }).session(
+      session,
+    );
+    if (!ownerRole) {
+      throw new NotFoundError("Owner role not found");
+    }
 
     const workspace = new WorkspaceModel({
       name: "My Workspace",
@@ -37,15 +50,14 @@ export const signupService = async (data: SignupDto) => {
     });
     await workspace.save({ session });
 
-    user.currentWorkspace = workspace._id;
-    await user.save({ session });
-
-    const ownerRole = await RoleModel.findOne({ name: Roles.OWNER }).session(
-      session,
-    );
-    if (!ownerRole) {
-      throw new NotFoundError("Owner role not found");
-    }
+    const verificationCode = generateVerificationCode();
+    verification = new VerificationModel({
+      userId: user._id,
+      code: verificationCode,
+      expiresAt: VERIFICATION_EXPIRES_AT,
+      type: VerificationEnum.EMAIL_VERIFICATION,
+    });
+    await verification.save({ session });
 
     const member = new MemberModel({
       userId: user._id,
@@ -55,35 +67,27 @@ export const signupService = async (data: SignupDto) => {
     });
     await member.save({ session });
 
-    const verificationCode = generateVerificationCode();
+    user.currentWorkspace = workspace._id;
 
-    const verification = new VerificationModel({
-      userId: user._id,
-      code: verificationCode,
-      expiresAt: VERIFICATION_EXPIRES_AT,
-      type: VerificationEnum.EMAIL_VERIFICATION,
-    });
-    await verification.save({ session });
-
-    if (!verification.code) {
-      throw new AppError(
-        "Something went wrong while generating verification code",
-      );
-    }
+    await user.save({ session });
 
     await session.commitTransaction();
-
-    return {
-      user: user.omitPassword(),
-      verificationCode: verification.code,
-    };
   } catch (error) {
     logError("Error during signupService", error);
     await session.abortTransaction();
-    throw error;
+    throw new AppError("Failed to register user. Please try again.");
   } finally {
     session.endSession();
   }
+
+  if (!user || !verification?.code) {
+    throw new AppError("Unexpected error: user or verification not created.");
+  }
+
+  return {
+    user: user.omitPassword(),
+    verificationCode: verification.code,
+  };
 };
 
 export const signinService = async (data: SigninDto) => {
@@ -114,10 +118,7 @@ export const signinService = async (data: SigninDto) => {
 export const resendVerificationCodeService = async (
   unverifiedUserId: string,
 ) => {
-  const unverifiedUser = await UserModel.findById(unverifiedUserId);
-  if (!unverifiedUser) {
-    throw new BadRequestError("User not found");
-  }
+  const { user: unverifiedUser } = await getUserByIdService(unverifiedUserId);
 
   const verification = await VerificationModel.findOne({
     userId: unverifiedUserId,
@@ -163,11 +164,7 @@ export const verifyVerificationCodeService = async (code: string) => {
     throw new BadRequestError("Invalid or expired verification code");
   }
 
-  const user = await UserModel.findById(verification.userId);
-  if (!user) {
-    throw new NotFoundError("User not found");
-  }
-
+  const { user } = await getUserByIdService(verification.userId.toString());
   const session = await mongoose.startSession();
   try {
     session.startTransaction();
@@ -180,7 +177,7 @@ export const verifyVerificationCodeService = async (code: string) => {
   } catch (error) {
     logError("Error in verifyVerificationCodeService", error);
     await session.abortTransaction();
-    throw error;
+    throw new AppError("Failed to verify verification code, Please try again");
   } finally {
     session.endSession();
   }
@@ -199,7 +196,6 @@ export const resetPasswordRequestService = async (email: string) => {
   const token = generateResetToken();
 
   const session = await mongoose.startSession();
-
   try {
     session.startTransaction();
 
@@ -221,7 +217,9 @@ export const resetPasswordRequestService = async (email: string) => {
   } catch (error) {
     logError("Error in resetPasswordRequestService", error);
     await session.abortTransaction();
-    throw error;
+    throw new AppError(
+      "Failed to serve reset password request, please try again",
+    );
   } finally {
     session.endSession();
   }
@@ -242,10 +240,7 @@ export const resetPasswordService = async (token: string, password: string) => {
     throw new BadRequestError("Invalid or expired token");
   }
 
-  const user = await UserModel.findById(verification.userId);
-  if (!user) {
-    throw new NotFoundError("User not found");
-  }
+  const { user } = await getUserByIdService(verification.userId.toString());
 
   const session = await mongoose.startSession();
   try {
@@ -265,7 +260,7 @@ export const resetPasswordService = async (token: string, password: string) => {
   } catch (error) {
     logError("Error in resetPasswordService", error);
     await session.abortTransaction();
-    throw error;
+    throw new AppError("Failed to reset password, please try again");
   } finally {
     session.endSession();
   }
