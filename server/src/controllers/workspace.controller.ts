@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { StatusCode } from "@/config/http.config";
 import { Permissions } from "@/enums/role.enum";
-import { UnauthorizedError } from "@/errors/unauthorize.error";
 import { getMemberRoleInWorkspaceService } from "@/services/member.service";
 import {
   createWorkspaceService,
@@ -21,15 +20,7 @@ import {
   updateWorkspaceSchema,
 } from "@/validators/workspace.validator";
 import { logger } from "@/utils/logger";
-
-// get user id utils
-const getUserId = (req: Request): string => {
-  const userId = req.user?._id;
-  if (!userId) {
-    throw new UnauthorizedError("Unauthorize user");
-  }
-  return userId;
-};
+import { getUserId } from "./user.controller";
 
 export const createWorkspace = async (req: Request, res: Response) => {
   const userId = getUserId(req);

@@ -4,12 +4,17 @@ import { StatusCode } from "@/config/http.config";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
 import { getCurrentUserService } from "@/services/user.service";
 
-export const getCurrentUser = async (req: Request, res: Response) => {
+// get user id utils
+export const getUserId = (req: Request): string => {
   const userId = req.user?._id;
-
   if (!userId) {
     throw new UnauthorizedError("Unauthorize user");
   }
+  return userId;
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  const userId = getUserId(req);
 
   const { user } = await getCurrentUserService(userId);
 
