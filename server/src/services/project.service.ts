@@ -9,6 +9,25 @@ import { TaskModel } from "@/models/task.model";
 import { TaskStatus } from "@/enums/task.enum";
 import { AppError } from "@/errors/app.error";
 
+// Get project-service, utils
+export const getProjectService = async (
+  projectId: string,
+  workspaceId: string,
+) => {
+  const project = await ProjectModel.findOne({
+    _id: projectId,
+    workspace: workspaceId,
+  }).select("_id name description");
+
+  if (!project) {
+    throw new NotFoundError(
+      "Project not found or does not belong to the specified workspace",
+    );
+  }
+
+  return { project };
+};
+
 export const createProjectService = async (
   userId: string,
   workspaceId: string,
@@ -45,35 +64,11 @@ export const getProjectsInWorkspaceService = async (
   return { projects, totalCount, totalPages, skip };
 };
 
-export const getProjectByIdAndWorkspaceIdService = async (
-  workspaceId: string,
-  projectId: string,
-) => {
-  const project = await ProjectModel.findOne({
-    _id: projectId,
-    workspace: workspaceId,
-  }).select("_id name description");
-
-  if (!project) {
-    throw new NotFoundError(
-      "Project not found or does not belong to the specified workspace",
-    );
-  }
-
-  return { project };
-};
-
 export const getProjectAnalyticsService = async (
   workspaceId: string,
   projectId: string,
 ) => {
-  const project = await ProjectModel.findById(projectId);
-
-  if (!project || project.workspace.toString() !== workspaceId.toString()) {
-    throw new NotFoundError(
-      "Project not found or does not belong to this workspace",
-    );
-  }
+  await getProjectService(projectId, workspaceId);
 
   const currentDate = new Date();
 
@@ -130,15 +125,7 @@ export const updateProjectService = async (
   data: UpdateProjectDto,
 ) => {
   const { name, description } = data;
-  const project = await ProjectModel.findOne({
-    _id: projectId,
-    workspace: workspaceId,
-  });
-  if (!project) {
-    throw new NotFoundError(
-      "Project not found or does not belong to the specified workspace",
-    );
-  }
+  const { project } = await getProjectService(projectId, workspaceId);
 
   if (name) project.name = name;
   if (description) project.description = description;
@@ -151,15 +138,7 @@ export const deleteProjectService = async (
   workspaceId: string,
   projectId: string,
 ) => {
-  const project = await ProjectModel.findOne({
-    _id: projectId,
-    workspace: workspaceId,
-  });
-  if (!project) {
-    throw new NotFoundError(
-      "Project not found or does not belong to the specified workspace",
-    );
-  }
+  const { project } = await getProjectService(projectId, workspaceId);
 
   const session = await mongoose.startSession();
   session.startTransaction();

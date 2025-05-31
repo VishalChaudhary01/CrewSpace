@@ -1,3 +1,4 @@
+import { TaskPriority, TaskStatus } from "@/enums/task.enum";
 import { z } from "zod";
 
 // Email schema
@@ -43,3 +44,30 @@ export const descriptionSchema = z
   .optional();
 
 export const idSchema = z.string().trim().min(1, "Id is Required");
+
+export const assignedToSchema = z
+  .string()
+  .trim()
+  .min(1, "Assigned To is required")
+  .optional()
+  .nullable();
+
+export const prioritySchema = z
+  .enum(Object.values(TaskPriority) as [string, ...string[]], {
+    required_error: "Priority is required",
+  })
+  .optional();
+
+export const statusSchema = z
+  .enum(Object.values(TaskStatus) as [string, ...string[]], {
+    required_error: "Status is required",
+  })
+  .optional();
+
+export const dueDateSchema = z
+  .string()
+  .trim()
+  .optional()
+  .refine((val) => !val || !isNaN(Date.parse(val)), {
+    message: "Due date must be a valid date string (e.g., YYYY-MM-DD)",
+  });

@@ -13,7 +13,7 @@ import {
   createProjectService,
   deleteProjectService,
   getProjectAnalyticsService,
-  getProjectByIdAndWorkspaceIdService,
+  getProjectService,
   getProjectsInWorkspaceService,
   updateProjectService,
 } from "@/services/project.service";
@@ -92,10 +92,7 @@ export const getProjectByIdAndWorkspaceId = async (
     `Fetching project-by-id id in workspace: ${workspaceId} for user ${userId}`,
   );
 
-  const { project } = await getProjectByIdAndWorkspaceIdService(
-    workspaceId,
-    projectId,
-  );
+  const { project } = await getProjectService(workspaceId, projectId);
 
   res.status(StatusCode.OK).json({
     message: "Project fetched successfully",
