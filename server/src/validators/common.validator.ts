@@ -32,7 +32,7 @@ export const verificationCodeSchema = z
   .regex(/^\d{6}$/, { message: "Verification code must contain only digits" });
 
 export const titleSchema = z
-  .string()
+  .string({ required_error: "Title is required" })
   .trim()
   .min(1, "Title is required")
   .max(50, "Title should be less then 50 characters");
@@ -43,7 +43,10 @@ export const descriptionSchema = z
   .max(500, "Description should be less then 500 characters")
   .optional();
 
-export const idSchema = z.string().trim().min(1, "Id is Required");
+export const idSchema = z
+  .string({ required_error: "Id is required" })
+  .trim()
+  .min(1, "Id is Required");
 
 export const assignedToSchema = z
   .string()
@@ -71,3 +74,9 @@ export const dueDateSchema = z
   .refine((val) => !val || !isNaN(Date.parse(val)), {
     message: "Due date must be a valid date string (e.g., YYYY-MM-DD)",
   });
+
+export const inviteCodeSchema = z
+  .string({
+    required_error: "Invite code is required",
+  })
+  .trim();
