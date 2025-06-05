@@ -62,7 +62,7 @@ export const updateTask = async (req: Request, res: Response) => {
   const { role } = await getMemberRoleInWorkspaceService(userId, workspaceId);
   roleGuard(role, [Permissions.EDIT_TASK]);
 
-  const { updatedTask } = await updateTaskService(
+  const { updatedTask: task } = await updateTaskService(
     workspaceId,
     projectId,
     taskId,
@@ -75,7 +75,7 @@ export const updateTask = async (req: Request, res: Response) => {
   res.status(StatusCode.OK).json({
     message: "Task updated successfully",
     data: {
-      updatedTask,
+      task,
     },
   });
 };

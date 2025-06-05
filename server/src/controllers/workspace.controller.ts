@@ -68,7 +68,9 @@ export const getWorkspaceWithMembers = async (req: Request, res: Response) => {
 
   res.status(StatusCode.OK).json({
     message: "Workspace fetched successfully",
-    workspace,
+    data: {
+      workspace,
+    },
   });
 };
 
@@ -173,13 +175,9 @@ export const deleteWorkspaceById = async (req: Request, res: Response) => {
   roleGuard(role, [Permissions.DELETE_WORKSPACE]);
   logger.info(`User ${userId} attempting to delete workspace ${workspaceId}`);
 
-  const { currentWorkspace } = await deleteWorkspaceService(
-    workspaceId,
-    userId,
-  );
+  await deleteWorkspaceService(workspaceId, userId);
 
   res.status(StatusCode.OK).json({
     message: "Workspace deleted successfully",
-    currentWorkspace,
   });
 };
