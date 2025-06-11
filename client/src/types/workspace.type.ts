@@ -36,15 +36,15 @@ export interface WorkspaceRequest {
 }
 
 export type CreateWorkspaceRequest = WorkspaceRequest & {
-  data: UpdateWorkspaceInput;
+  inputs: UpdateWorkspaceInput;
 };
 
 export type UpdateWorkspaceRequest = WorkspaceRequest & {
-  data: UpdateWorkspaceInput;
+  inputs: UpdateWorkspaceInput;
 };
 
 export type ChangeWorkspaceMemberRoleRequest = WorkspaceRequest & {
-  data: {
+  inputs: {
     roleId: string;
     memberId: string;
   };
@@ -56,6 +56,10 @@ export type InvitedUserJoinWorkspaceRequest = {
 
 // RESPONSE TYPES
 export type WorkspaceResponse = BaseResponse<{ workspace: Workspace }>;
+
+export type WorkspaceWithMembersResponse = BaseResponse<{
+  workspace: WorkspaceWithMembers;
+}>;
 
 export type AllWorkspacesResponse = BaseResponse<{
   workspaces: Workspace[];

@@ -8,11 +8,11 @@ export type SigninInput = z.infer<typeof signinSchema>;
 
 // REQUEST TYPES
 export type SigninRequest = {
-  data: SigninInput;
+  inputs: SigninInput;
 };
 
 export type SignupRequest = {
-  data: SignupInput;
+  inputs: SignupInput;
 };
 
 // Response Type

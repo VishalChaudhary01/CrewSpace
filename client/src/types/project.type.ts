@@ -27,11 +27,11 @@ export type ProjectRequest = {
 
 export type CreateProjectRequest = {
   workspaceId: string;
-  data: CreateProjectInput;
+  inputs: CreateProjectInput;
 };
 
 export type UpdateProjectRequest = ProjectRequest & {
-  data: UpdateProjectInput;
+  inputs: UpdateProjectInput;
 };
 
 export type AllProjectRequest = {

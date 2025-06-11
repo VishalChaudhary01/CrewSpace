@@ -1,3 +1,5 @@
+import type { TaskPriorityType, TaskStatusType } from "@/constants";
+
 export interface BaseEntity {
   _id: string;
   createdAt?: string | Date;
@@ -28,6 +30,15 @@ export interface Analytics {
   totalTasks: number;
   overdueTasks: number;
   completedTasks: number;
+}
+
+export interface Filters {
+  projectId?: string | null;
+  keyword?: string | null;
+  priority?: TaskPriorityType | null;
+  status?: TaskStatusType | null;
+  assignedTo?: string | null;
+  dueDate?: string | null;
 }
 
 // RESPONSE TYPES

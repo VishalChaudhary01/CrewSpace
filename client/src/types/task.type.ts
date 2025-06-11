@@ -4,6 +4,7 @@ import type {
   BaseEntity,
   BaseResponse,
   BaseUser,
+  Filters,
   Pagination,
 } from "./common.type";
 import type {
@@ -32,23 +33,19 @@ export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
 // REQUEST TYPES
 export interface CreateTaskRequest {
   workspaceId: string;
-  data: CreateTaskInput;
+  inputs: CreateTaskInput;
 }
 
 export interface UpdateTaskRequest {
   workspaceId: string;
   projectId: string;
-  data: UpdateTaskInput;
+  taskId: string;
+  inputs: UpdateTaskInput;
 }
 
 export interface AllTaskRequest {
   workspaceId: string;
-  projectId?: string | null;
-  keyword?: string | null;
-  priority?: TaskPriorityType | null;
-  status?: TaskStatusType | null;
-  assignedTo?: string | null;
-  dueDate?: string | null;
+  filters: Filters;
   pageNumber?: number | null;
   pageSize?: number | null;
 }

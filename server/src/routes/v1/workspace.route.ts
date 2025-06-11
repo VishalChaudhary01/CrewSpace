@@ -17,7 +17,7 @@ workspaceRoutes.post("/", createWorkspace);
 workspaceRoutes.put("/:id", updateWorkspaceById);
 workspaceRoutes.put("/change/member/role/:id", changeWorkspaceMemberRole);
 
-workspaceRoutes.delete("/delete/:id", deleteWorkspaceById);
+workspaceRoutes.delete("/:id", deleteWorkspaceById);
 
 workspaceRoutes.get("/all", getAllWorkspacesUserIsMember);
 workspaceRoutes.get("/members/:id", getWorkspaceMembers);

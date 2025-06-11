@@ -16,6 +16,7 @@ import type {
   UpdateWorkspaceRequest,
   WorkspaceRequest,
   WorkspaceResponse,
+  WorkspaceWithMembersResponse,
 } from "@/types/workspace.type";
 import type { AnalyticsResponse, BaseResponse } from "@/types/common.type";
 import type {
@@ -32,25 +33,26 @@ import type {
   CreateTaskRequest,
   DeleteTaskRequest,
   TaskResponse,
+  UpdateTaskRequest,
 } from "@/types/task.type";
 
 /************ AUTH API ************/
 export const signinMutationFn = async ({
-  data,
+  inputs,
 }: SigninRequest): Promise<SigninResponse> => {
-  const response = await API.post("/auth/signin", data);
+  const response = await API.post("/auth/signin", inputs);
   return response.data;
 };
 
 export const signupMutationFn = async ({
-  data,
+  inputs,
 }: SignupRequest): Promise<BaseResponse<null>> => {
-  const response = await API.post("/auth/register", data);
+  const response = await API.post("/auth/signup", inputs);
   return response.data;
 };
 
-export const logoutMutationFn = async (): Promise<BaseResponse<null>> => {
-  const response = await API.post("/auth/logout");
+export const signoutMutationFn = async (): Promise<BaseResponse<null>> => {
+  const response = await API.post("/auth/signout");
   return response.data;
 };
 
@@ -62,17 +64,17 @@ export const getCurrentUserQueryFn = async (): Promise<UserResponse> => {
 
 /************ WORKSPACE API ************/
 export const createWorkspaceMutationFn = async ({
-  data,
+  inputs,
 }: CreateWorkspaceRequest): Promise<WorkspaceResponse> => {
-  const response = await API.post("/workspace/create/new", data);
+  const response = await API.post("/workspace", inputs);
   return response.data;
 };
 
 export const updateWorkspaceMutationFn = async ({
   workspaceId,
-  data,
+  inputs,
 }: UpdateWorkspaceRequest): Promise<WorkspaceResponse> => {
-  const response = await API.put(`/workspace/update/${workspaceId}`, data);
+  const response = await API.put(`/workspace/${workspaceId}`, inputs);
   return response.data;
 };
 
@@ -82,9 +84,9 @@ export const getAllWorkspacesUserIsMemberQueryFn =
     return response.data;
   };
 
-export const getWorkspaceByIdQueryFn = async ({
+export const getWorkspaceWithMembersQueryFn = async ({
   workspaceId,
-}: WorkspaceRequest): Promise<WorkspaceResponse> => {
+}: WorkspaceRequest): Promise<WorkspaceWithMembersResponse> => {
   const response = await API.get(`/workspace/${workspaceId}`);
   return response.data;
 };
@@ -105,11 +107,11 @@ export const getWorkspaceAnalyticsQueryFn = async ({
 
 export const changeWorkspaceMemberRoleMutationFn = async ({
   workspaceId,
-  data,
+  inputs,
 }: ChangeWorkspaceMemberRoleRequest): Promise<ChangeWorkspaceMemberRoleResponse> => {
   const response = await API.put(
     `/workspace/change/member/role/${workspaceId}`,
-    data,
+    inputs,
   );
   return response.data;
 };
@@ -117,7 +119,7 @@ export const changeWorkspaceMemberRoleMutationFn = async ({
 export const deleteWorkspaceMutationFn = async ({
   workspaceId,
 }: WorkspaceRequest): Promise<BaseResponse<null>> => {
-  const response = await API.delete(`/workspace/delete/${workspaceId}`);
+  const response = await API.delete(`/workspace/${workspaceId}`);
   return response.data;
 };
 
@@ -132,11 +134,11 @@ export const invitedUserJoinWorkspaceMutationFn = async ({
 /************ PROJECT API ************/
 export const createProjectMutationFn = async ({
   workspaceId,
-  data,
+  inputs,
 }: CreateProjectRequest): Promise<ProjectResponse> => {
   const response = await API.post(
     `/project/workspace/${workspaceId}/create`,
-    data,
+    inputs,
   );
   return response.data;
 };
@@ -144,11 +146,11 @@ export const createProjectMutationFn = async ({
 export const updateProjectMutationFn = async ({
   projectId,
   workspaceId,
-  data,
+  inputs,
 }: UpdateProjectRequest): Promise<ProjectResponse> => {
   const response = await API.put(
     `/project/${projectId}/workspace/${workspaceId}/update`,
-    data,
+    inputs,
   );
   return response.data;
 };
@@ -197,26 +199,35 @@ export const deleteProjectMutationFn = async ({
 /************ TASKS API ************/
 export const createTaskMutationFn = async ({
   workspaceId,
-  data,
+  inputs,
 }: CreateTaskRequest): Promise<TaskResponse> => {
   const response = await API.post(
-    `/task/project/${data.projectId}/workspace/${workspaceId}/create`,
-    data,
+    `/task/project/${inputs.projectId}/workspace/${workspaceId}/create`,
+    inputs,
+  );
+  return response.data;
+};
+
+export const updateTaskMutationFn = async ({
+  workspaceId,
+  projectId,
+  taskId,
+  inputs,
+}: UpdateTaskRequest): Promise<TaskResponse> => {
+  const response = await API.post(
+    `/task/${taskId}/project/${projectId}/workspace/${workspaceId}`,
+    inputs,
   );
   return response.data;
 };
 
 export const getAllTasksQueryFn = async ({
   workspaceId,
-  projectId,
-  keyword,
-  assignedTo,
-  priority,
-  status,
-  dueDate,
+  filters,
   pageNumber,
   pageSize,
 }: AllTaskRequest): Promise<AllTaskResponse> => {
+  const { projectId, keyword, assignedTo, priority, status, dueDate } = filters;
   const baseUrl = `/task/workspace/${workspaceId}/all`;
 
   const queryParams = new URLSearchParams();
@@ -231,7 +242,6 @@ export const getAllTasksQueryFn = async ({
 
   const url = queryParams.toString() ? `${baseUrl}?${queryParams}` : baseUrl;
   const response = await API.get(url);
-  console.log("All Tasks:: ", response);
   return response.data;
 };
 
