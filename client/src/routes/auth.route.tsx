@@ -1,16 +1,18 @@
 import { Loader } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuthContext } from "@/contexts/auth.context";
 import { isAuthRoute } from "./comman/route-path";
+import { useAuth } from "@/hooks";
 
 export const AuthRoute = () => {
   const location = useLocation();
 
-  const { user, isAuthLoading } = useAuthContext();
+  const { data, isLoading } = useAuth();
+
+  const user = data?.data?.user;
 
   const authRoute = isAuthRoute(location.pathname);
 
-  if (isAuthLoading && !authRoute)
+  if (isLoading && !authRoute)
     return <Loader className='w-8 h-8 animate-spin place-self-center flex' />;
 
   return !user ? (

@@ -35,7 +35,7 @@ export interface WorkspaceRequest {
   workspaceId: string;
 }
 
-export type CreateWorkspaceRequest = WorkspaceRequest & {
+export type CreateWorkspaceRequest = {
   inputs: UpdateWorkspaceInput;
 };
 
