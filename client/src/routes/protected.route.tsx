@@ -1,8 +1,14 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Loader } from "lucide-react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/hooks";
 
 export const ProtectedRoute = () => {
-  const location = useLocation();
-  console.log("Protected route: ", location.pathname);
+  const { data, isLoading } = useAuth();
 
-  return <Outlet />;
+  const user = data?.data?.user;
+
+  if (isLoading)
+    return <Loader className='w-8 h-8 animate-spin place-self-center flex' />;
+
+  return user ? <Outlet /> : <Navigate to='/' replace />;
 };

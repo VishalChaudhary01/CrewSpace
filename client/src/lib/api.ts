@@ -58,7 +58,7 @@ export const signoutMutationFn = async (): Promise<BaseResponse<null>> => {
 
 /************ USER API ************/
 export const getCurrentUserQueryFn = async (): Promise<UserResponse> => {
-  const response = await API.get("/user/current");
+  const response = await API.get("/user/profile");
   return response.data;
 };
 
