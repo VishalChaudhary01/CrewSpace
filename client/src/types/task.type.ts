@@ -45,7 +45,7 @@ export interface UpdateTaskRequest {
 
 export interface AllTaskRequest {
   workspaceId: string;
-  filters: Filters;
+  filters?: Filters;
   pageNumber?: number | null;
   pageSize?: number | null;
 }
