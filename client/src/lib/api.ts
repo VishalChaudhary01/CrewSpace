@@ -223,7 +223,7 @@ export const updateTaskMutationFn = async ({
 
 export const getAllTasksQueryFn = async ({
   workspaceId,
-  filters,
+  filters = {},
   pageNumber,
   pageSize,
 }: AllTaskRequest): Promise<AllTaskResponse> => {
