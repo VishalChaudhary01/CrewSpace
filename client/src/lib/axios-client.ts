@@ -4,7 +4,7 @@ import type { CustomError } from "@/types/error.type";
 export const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const options = {
-  baseURL,
+  baseURL: `${baseURL}/api/v1`,
   withCredentials: true,
   timeout: 10000,
 };
