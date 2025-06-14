@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import ExpressMongoSanitize from "express-mongo-sanitize";
 import { errorHandler } from "./middlewares/error-handler.middleware";
 import { config } from "./config/env.config";
 import v1Routes from "./routes/v1";
@@ -12,7 +11,6 @@ export const createServer = () => {
   const app = express();
   app
     .use(cors({ origin: "http://localhost:5173", credentials: true }))
-    .use(ExpressMongoSanitize())
     .use(helmet())
     .use(baseLimiter)
     .use(express.json({ limit: "50kb" }))
