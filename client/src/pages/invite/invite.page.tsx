@@ -54,12 +54,12 @@ export const InvitePage = () => {
           to='/'
           className='flex items-center gap-2 self-center font-semibold text-base'
         >
-          TeamSync
+          CrewSpace
         </Link>
         <div className='flex flex-col gap-6'>
           <CardLayout
-            header='Hey there! You are invited to join a TeamSync Workspace!'
-            description='Looks like you need to be logged into your TeamSync account to
+            header='Hey there! You are invited to join a CrewSpace Workspace!'
+            description='Looks like you need to be logged into your CrewSpace account to
                 join this Workspace.'
           >
             {isPending ? (

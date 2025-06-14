@@ -14,7 +14,7 @@
   "keywords": [],
   "author": "Vishal Chaudhary",
   "license": "ISC",
-  "description": "Server of TeamSync application",
+  "description": "Server of CrewSpace application",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "bullmq": "^5.53.0",

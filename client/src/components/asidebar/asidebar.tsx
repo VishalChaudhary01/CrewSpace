@@ -74,7 +74,7 @@ export const Asidebar = () => {
                 <Button size='sm'>
                   <AudioWaveform size={6} />
                 </Button>
-                <span className='font-semibold text-base'>Team Sync</span>
+                <span className='font-semibold text-base'>Crew Space</span>
               </Link>
             )}
           </div>
