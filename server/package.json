@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc",
+    "build": "pnpm clean && tsc",
     "lint": "eslint",
-    "start": "dotenv -- npm run build && node dist/index.js",
+    "start": "dotenv -- node dist/index.js",
     "dev": "dotenv -- tsc-watch --onsuccess \"node dist/index.js\"",
     "test": "jest",
     "test:watch": "jest --watch"
