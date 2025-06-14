@@ -11,13 +11,13 @@ import { baseLimiter } from "./utils/limiter";
 export const createServer = () => {
   const app = express();
   app
+    .use(cors({ origin: "http://localhost:5173", credentials: true }))
     .use(ExpressMongoSanitize())
     .use(helmet())
     .use(baseLimiter)
     .use(express.json({ limit: "50kb" }))
     .use(express.urlencoded({ extended: true }))
-    .use(cookieParser())
-    .use(cors({ origin: "http://localhost:5173", credentials: true }));
+    .use(cookieParser());
 
   app.get("/health", async (_req: Request, res: Response) => {
     res.status(200).json({ ok: true });
