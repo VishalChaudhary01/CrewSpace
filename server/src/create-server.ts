@@ -10,7 +10,7 @@ import { baseLimiter } from "./utils/limiter";
 export const createServer = () => {
   const app = express();
   app
-    .use(cors({ origin: "http://localhost:5173", credentials: true }))
+    .use(cors({ origin: config.FRONTEND_URL, credentials: true }))
     .use(helmet())
     .use(baseLimiter)
     .use(express.json({ limit: "50kb" }))
