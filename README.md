@@ -2,7 +2,6 @@
 
 CrewSpace is a powerful **Project Management Platform** built with the **MERN stack** and **TypeScript**, tailored for modern teams. Designed with **multi-tenancy**, **role-based access control**, and **real-time communication patterns**, it enables organizations to manage workspaces, projects, and tasks with enterprise-grade reliability and developer-friendly architecture.
 
----
 
 ## 🌟 Highlight Features
 
@@ -40,7 +39,6 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
 - **Pagination & Lazy Loading** — Optimized performance for large datasets.
 - **Responsive UI** — Mobile-first with TailwindCSS and Shadcn UI components.
 
----
 
 ## ⚙️ Tech Stack
 
@@ -60,8 +58,7 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
 - **BullMQ** — Scalable message queue for background jobs.
 - **Winston** — Granular, environment-based logging.
 - **Zod** — Type-safe schema validation.
-
----
+  
 
 ## 🛠️ Installation & Setup
 
@@ -102,13 +99,12 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
     pnpm run dev        # Open on http://localhost:5173
   ```
 
----
 
 ## 📫 Contact
 
 **Vishal Chaudhary**  
 - [GitHub](https://github.com/VishalChaudhary01)  
 - [LinkedIn](https://www.linkedin.com/in/vishal-chaudhary-32462922a)  
-- 📧 vishalchaudhary012@gmail.com
+- vishalchaudhary8832@gmail.com
 
 
