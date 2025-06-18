@@ -8,7 +8,7 @@ import {
 const cookieOptions: CookieOptions = {
   httpOnly: true,
   secure: config.NODE_ENV === "production" ? true : false,
-  sameSite: "lax",
+  sameSite: config.NODE_ENV === "production" ? "none" : "lax",
   expires: AUTHENTICATION_COOKIE_EXPIRES_AT,
   path: "/",
 };
