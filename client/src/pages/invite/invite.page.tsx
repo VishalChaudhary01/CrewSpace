@@ -86,7 +86,7 @@ export const InvitePage = () => {
                   <div className='flex flex-col md:flex-row items-center gap-2'>
                     <Link
                       className='flex-1 w-full text-base'
-                      to={`/sign-up?returnUrl=${returnUrl}`}
+                      to={`/signup?returnUrl=${returnUrl}`}
                     >
                       <Button className='w-full'>Signup</Button>
                     </Link>

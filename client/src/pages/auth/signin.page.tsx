@@ -60,7 +60,7 @@ export const SignInPage = () => {
         footer={
           <div>
             Don't have an account?{" "}
-            <a href='/sign-up' className='text-primary hover:underline'>
+            <a href='/signup' className='text-primary hover:underline'>
               Sign Up
             </a>
           </div>
