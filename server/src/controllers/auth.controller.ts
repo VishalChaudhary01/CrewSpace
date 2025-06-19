@@ -22,6 +22,9 @@ export const signup = async (req: Request, res: Response) => {
   logger.info(`User signed up successfully: ${user._id}`);
   res.status(StatusCode.CREATED).json({
     message: "Signup successful",
+    data: {
+      user,
+    },
   });
 };
 

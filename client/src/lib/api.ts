@@ -1,8 +1,8 @@
 import API from "./axios-client";
 import type { UserResponse } from "@/types/user.type";
 import type {
+  AuthResponse,
   SigninRequest,
-  SigninResponse,
   SignupRequest,
 } from "@/types/auth.type";
 import type {
@@ -39,14 +39,14 @@ import type {
 /************ AUTH API ************/
 export const signinMutationFn = async ({
   inputs,
-}: SigninRequest): Promise<SigninResponse> => {
+}: SigninRequest): Promise<AuthResponse> => {
   const response = await API.post("/auth/signin", inputs);
   return response.data;
 };
 
 export const signupMutationFn = async ({
   inputs,
-}: SignupRequest): Promise<BaseResponse<null>> => {
+}: SignupRequest): Promise<AuthResponse> => {
   const response = await API.post("/auth/signup", inputs);
   return response.data;
 };

@@ -16,4 +16,4 @@ export type SignupRequest = {
 };
 
 // Response Type
-export type SigninResponse = BaseResponse<{ user: User }>;
+export type AuthResponse = BaseResponse<{ user: User }>;
