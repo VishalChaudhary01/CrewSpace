@@ -1,10 +1,5 @@
 import { z } from "zod";
-import {
-  emailSchema,
-  nameSchema,
-  passwordSchema,
-  verificationCodeSchema,
-} from "./common.validator";
+import { emailSchema, nameSchema, passwordSchema } from "./common.validator";
 
 // Signup schema
 export const signupSchema = z.object({
@@ -20,18 +15,6 @@ export const signinSchema = z.object({
     .string({ required_error: "Password is required" })
     .trim()
     .min(1, { message: "Password cannot be empty" }),
-});
-
-export const verifyVerificationCodeSchema = z.object({
-  code: verificationCodeSchema,
-});
-
-export const resetPasswordRequestSchema = z.object({
-  email: emailSchema,
-});
-
-export const resetPasswordSchema = z.object({
-  password: passwordSchema,
 });
 
 export type SignupDto = z.infer<typeof signupSchema>;

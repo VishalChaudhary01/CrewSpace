@@ -1,15 +1,11 @@
-import { CookieOptions, Request, Response } from "express";
+import { CookieOptions, Response } from "express";
 import { config } from "@/config/env.config";
-import {
-  AUTHENTICATION_COOKIE_EXPIRES_AT,
-  EMAIL_VERIFICATION_COOKIE_EXPIRES_AT,
-} from "./date-time";
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
   secure: config.NODE_ENV === "production" ? true : false,
   sameSite: config.NODE_ENV === "production" ? "none" : "lax",
-  expires: AUTHENTICATION_COOKIE_EXPIRES_AT,
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
   path: "/",
 };
 
@@ -21,19 +17,3 @@ export const setAuthenticationCookies = (
 
 export const clearAuthenticationCookies = (res: Response): Response =>
   res.clearCookie(config.AUTH_COOKIE_NAME);
-
-// Store Pending Email Verification User ID
-export const setEmailVerificationCookie = (
-  res: Response,
-  userId: string,
-): Response =>
-  res.cookie(config.PENDING_EMAIL_VERIFICATION_USER_ID, userId, {
-    ...cookieOptions,
-    expires: EMAIL_VERIFICATION_COOKIE_EXPIRES_AT,
-  });
-
-export const getEmailVerificationCookie = (req: Request): string | undefined =>
-  req.cookies?.[config.PENDING_EMAIL_VERIFICATION_USER_ID];
-
-export const clearEmailVerificationCookie = (res: Response): Response =>
-  res.clearCookie(config.PENDING_EMAIL_VERIFICATION_USER_ID);

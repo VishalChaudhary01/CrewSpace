@@ -22,12 +22,6 @@ export const passwordSchema = z
   .regex(/[0-9]/, "Include at least one number (0-9)")
   .regex(/[@$!%*?&#]/, "Include at least one special character (@$!%*?&#)");
 
-export const verificationCodeSchema = z
-  .string({ required_error: "Please enter your verification code" })
-  .trim()
-  .length(6, { message: "Verification code must be exactly 6 digits" })
-  .regex(/^\d{6}$/, { message: "Verification code must contain only digits" });
-
 export const titleSchema = z
   .string({ required_error: "Please enter title" })
   .trim()

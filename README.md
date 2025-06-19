@@ -22,7 +22,6 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
 ### 🔐 Security & Performance
 
 - **JWT Auth with Secure Cookies** — Token-based sessions with HTTP-only, SameSite flags.
-- **Email Verification** — Prevents impersonation attacks on user signup.
 - **Helmet** — Sets secure HTTP headers.
 - **Rate Limiting (express-rate-limit)** — Protects against brute force & DoS attacks.
 - **Input Validation** — Sanitization & schema validation using Zod.
@@ -56,8 +55,6 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
 
 - **Node.js + Express + TypeScript**
 - **MongoDB + Mongoose**
-- **Redis** — Pub/Sub and queue processing.
-- **BullMQ** — Scalable message queue for background jobs.
 - **Winston** — Granular, environment-based logging.
 - **Zod** — Type-safe schema validation.
 
@@ -67,48 +64,46 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
 
 ### 🔌 Clone Repository
 
-  ```bash
-    git clone https://github.com/VishalChaudhary01/CrewSpace.git
-    cd CrewSpace
-  ```
+```bash
+  git clone https://github.com/VishalChaudhary01/CrewSpace.git
+  cd CrewSpace
+```
 
-###  🧩 Backend Setup
+### 🧩 Backend Setup
 
-  ```bash
-    cd server
-    pnpm install
-    cp .env.example .env
-  ```
+```bash
+  cd server
+  pnpm install
+  cp .env.example .env
+```
 
-  > **Note:** Add MONGODB_URI, REDIS_URI, RESEND_TOKEN, RESEND_SENDER, and other environment variables.
+> **Note:** Add MONGODB_URI and other environment variables.
 
+```bash
+  pnpm run seed:role  # Seed role data in database
+  pnpm run dev        # Start server on http://localhost:5000
+```
 
-  ```bash
-    pnpm run seed:role  # Seed role data in database
-    pnpm run dev        # Start server on http://localhost:5000
-  ```
+### 💻 Frontend Setup
 
-###  💻 Frontend Setup
+```bash
+  cd client
+  pnpm install
+  cp .env.example .env
+```
 
-  ```bash
-    cd client
-    pnpm install
-    cp .env.example .env
-  ```
+> **Note:** Add VITE_API_BASE_URL frontend environment variables.
 
-  > **Note:** Add VITE_API_BASE_URL frontend environment variables.
-
-  ```bash
-    pnpm run dev        # Open on http://localhost:5173
-  ```
+```bash
+  pnpm run dev        # Open on http://localhost:5173
+```
 
 ---
 
 ## 📫 Contact
 
-**Vishal Chaudhary**  
-- [GitHub](https://github.com/VishalChaudhary01)  
-- [LinkedIn](https://www.linkedin.com/in/vishal-chaudhary-32462922a)  
+**Vishal Chaudhary**
+
+- [GitHub](https://github.com/VishalChaudhary01)
+- [LinkedIn](https://www.linkedin.com/in/vishal-chaudhary-32462922a)
 - 📧 vishalchaudhary012@gmail.com
-
-

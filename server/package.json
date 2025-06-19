@@ -17,7 +17,6 @@
   "description": "Server of CrewSpace application",
   "dependencies": {
     "bcryptjs": "^3.0.2",
-    "bullmq": "^5.53.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -29,7 +28,6 @@
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.15.0",
-    "resend": "^4.5.1",
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0",

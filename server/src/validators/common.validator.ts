@@ -25,12 +25,6 @@ export const nameSchema = z
   .min(2, { message: "Name must be at least 2 characters" })
   .max(50, { message: "Name must be under 50 characters" });
 
-export const verificationCodeSchema = z
-  .string({ required_error: "Verification code is required" })
-  .trim()
-  .length(6, { message: "Verification code must be exactly 6 digits" })
-  .regex(/^\d{6}$/, { message: "Verification code must contain only digits" });
-
 export const titleSchema = z
   .string({ required_error: "Title is required" })
   .trim()
