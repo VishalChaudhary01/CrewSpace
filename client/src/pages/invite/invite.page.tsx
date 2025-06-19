@@ -36,6 +36,7 @@ export const InvitePage = () => {
           queryClient.resetQueries({
             queryKey: ["user-workspaces"],
           });
+          toast.success(result.message);
           navigate(`/workspace/${result.data?.workspaceId}`);
         },
         onError: (error: any) => {

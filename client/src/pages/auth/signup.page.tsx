@@ -42,8 +42,8 @@ export const SignUpPage = () => {
       { inputs },
       {
         onSuccess: (result) => {
-          navigate(`/workspace/${result.data?.user?.currentWorkspace}`);
           toast.success(result.message);
+          navigate(`/workspace/${result.data?.user?.currentWorkspace}`);
         },
         onError: (error: any) => {
           toast.error(error.response.data.message || "Failed to register");

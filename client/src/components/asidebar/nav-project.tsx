@@ -90,8 +90,8 @@ export function NavProjects() {
             queryKey: ["all-projects", workspaceId],
           });
           toast.success(result.message);
+          onCloseDialog();
           navigate(`/workspace/${workspaceId}`);
-          setTimeout(() => onCloseDialog(), 100);
         },
         onError: (error: any) => {
           toast.error(

@@ -40,9 +40,9 @@ export const DeleteWorkspaceCard = () => {
           queryClient.invalidateQueries({
             queryKey: ["user-workspaces"],
           });
-          navigate(`/workspace/${nextWorkspace}`);
           toast.success(result.message);
-          setTimeout(() => onCloseDialog(), 100);
+          onCloseDialog();
+          navigate(`/workspace/${nextWorkspace}`);
         },
         onError: (error: any) => {
           toast.error(

@@ -42,10 +42,10 @@ export const SignInPage = () => {
       { inputs },
       {
         onSuccess: (result) => {
+          toast.success(result.message);
           navigate(`/workspace/${result?.data?.user?.currentWorkspace}`);
         },
         onError: (error: any) => {
-          console.log("Error at form:: ", error);
           toast.error(error.response.data.message || "Failed to login");
         },
       },

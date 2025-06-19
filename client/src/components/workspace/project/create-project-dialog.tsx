@@ -52,8 +52,8 @@ export const CreateProjectDialog = () => {
             queryKey: ["all-projects", workspaceId],
           });
           toast.success(result.message);
+          onClose();
           navigate(`/workspace/${workspaceId}/project/${project?._id}`);
-          setTimeout(() => onClose(), 100);
         },
         onError: (error: any) => {
           toast.error(

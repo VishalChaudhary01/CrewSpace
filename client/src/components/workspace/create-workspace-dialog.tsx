@@ -48,11 +48,8 @@ export const CreateWorkspaceDialog = () => {
             queryKey: ["user-workspaces"],
           });
           toast.success(result.message);
-          setTimeout(() => {
-            onClose();
-          }, 100);
-          if (result.data?.workspace?._id)
-            navigate(`/workspace/${result.data?.workspace?._id}`);
+          onClose();
+          navigate(`/workspace/${result.data?.workspace?._id}`);
         },
         onError: (error: any) => {
           toast.error(

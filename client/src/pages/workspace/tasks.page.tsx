@@ -17,7 +17,7 @@ export const TasksPage = () => {
           </p>
         </div>
         <PermissionsGuard requiredPermission={Permissions.CREATE_TASK}>
-          <Button onClick={() => setTimeout(() => onOpenCreateTask(), 100)}>
+          <Button onClick={() => onOpenCreateTask()}>
             <Plus className='w-4 h-4 ' />
             <span>Create Task</span>
           </Button>

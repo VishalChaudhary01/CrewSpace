@@ -44,12 +44,13 @@ export const Asidebar = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: signoutMutationFn,
-    onSuccess: () => {
+    onSuccess: (result) => {
       queryClient.resetQueries({
         queryKey: ["auth-user"],
       });
-      navigate("/");
+      toast.success(result.message);
       setIsOpen(false);
+      navigate("/");
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message ?? "Filed to Log out");
