@@ -3,6 +3,7 @@ import { Permissions } from "@/constants";
 import { useCreateTaskDialog } from "@/hooks/dialog";
 import { Button } from "@/components/ui/button";
 import { PermissionsGuard } from "@/components/common/permission-guard";
+import { TaskTable } from "@/components/workspace/task/task-table";
 
 export const TasksPage = () => {
   const { onOpen: onOpenCreateTask } = useCreateTaskDialog();
@@ -24,9 +25,10 @@ export const TasksPage = () => {
         </PermissionsGuard>
       </div>
       {/* TODO - NEED TO ADD TABLE FOR ALL TASKS */}
-      <span>
+      <TaskTable />
+      {/* <span>
         <strong>Todo: </strong>Need to add Tasks table
-      </span>
+      </span> */}
     </div>
   );
 };

@@ -223,11 +223,12 @@ export const updateTaskMutationFn = async ({
 
 export const getAllTasksQueryFn = async ({
   workspaceId,
-  filters = {},
+  filters,
+  dueDate,
   pageNumber,
   pageSize,
 }: AllTaskRequest): Promise<AllTaskResponse> => {
-  const { projectId, keyword, assignedTo, priority, status, dueDate } = filters;
+  const { status, keyword, assignedTo, priority, projectId } = filters ?? {};
   const baseUrl = `/task/workspace/${workspaceId}/all`;
 
   const queryParams = new URLSearchParams();

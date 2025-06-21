@@ -124,8 +124,8 @@ export const getAllTasksService = async (
       .skip(skip)
       .limit(pageSize)
       .sort({ createdAt: -1 })
-      .populate("assignedTo", "_id name profilePicture -password")
-      .populate("project", "_id emoji name"),
+      .populate("assignedTo", "_id name")
+      .populate("project", "_id name"),
     TaskModel.countDocuments(query),
   ]);
 

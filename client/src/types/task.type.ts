@@ -4,13 +4,13 @@ import type {
   BaseEntity,
   BaseResponse,
   BaseUser,
-  Filters,
   Pagination,
 } from "./common.type";
 import type {
   createTaskSchema,
   updateTaskSchema,
 } from "@/validators/task.validator";
+import type { Filters } from "@/components/workspace/task/task-table";
 
 export interface Task extends BaseEntity {
   title: string;
@@ -45,9 +45,11 @@ export interface UpdateTaskRequest {
 
 export interface AllTaskRequest {
   workspaceId: string;
+  projectId?: string | null;
+  pageSize?: number;
+  pageNumber?: number;
   filters?: Filters;
-  pageNumber?: number | null;
-  pageSize?: number | null;
+  dueDate?: string | null;
 }
 
 export interface DeleteTaskRequest {

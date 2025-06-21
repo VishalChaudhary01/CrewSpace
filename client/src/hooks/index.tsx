@@ -124,25 +124,37 @@ export const useGetProjectById = ({
   return query;
 };
 
+// Hook
 export const useGetAllTasks = ({
   workspaceId,
-  filters,
+  projectId,
   pageSize,
   pageNumber,
+  filters,
+  dueDate,
 }: AllTaskRequest) => {
   const query = useQuery<AllTaskResponse, CustomError>({
-    queryKey: ["all-tasks", workspaceId, pageSize, pageNumber, filters],
+    queryKey: [
+      "all-tasks",
+      workspaceId,
+      projectId,
+      pageSize,
+      pageNumber,
+      filters,
+      dueDate,
+    ],
     queryFn: () =>
       getAllTasksQueryFn({
         workspaceId,
-        filters: {
-          ...filters,
-        },
-        pageNumber,
+        projectId,
         pageSize,
+        pageNumber,
+        dueDate,
+        filters,
       }),
     staleTime: 0,
     enabled: !!workspaceId,
   });
+
   return query;
 };

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AuthProvider } from "@/providers/auth.provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -6,8 +6,12 @@ import { Asidebar } from "@/components/asidebar/asidebar";
 import { CreateWorkspaceDialog } from "@/components/workspace/create-workspace-dialog";
 import { CreateProjectDialog } from "@/components/workspace/project/create-project-dialog";
 import { Header } from "@/components/common/header";
+import { CreateTaskDialog } from "@/components/workspace/task/create-task-dialog";
 
 export const AppLayout = () => {
+  const param = useParams();
+  const projectId = param.projectId as string;
+
   return (
     <AuthProvider>
       <SidebarProvider>
@@ -23,6 +27,7 @@ export const AppLayout = () => {
           </div>
           <CreateWorkspaceDialog />
           <CreateProjectDialog />
+          <CreateTaskDialog projectId={projectId || undefined} />
         </div>
       </SidebarProvider>
     </AuthProvider>
