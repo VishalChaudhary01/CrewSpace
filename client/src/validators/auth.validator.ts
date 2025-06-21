@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { emailSchema, nameSchema, passwordSchema } from "./common.validator";
 
 export const signupSchema = z

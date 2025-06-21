@@ -1,13 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Permissions } from "@/constants";
-import { useGetProjectsInWorkspace } from "@/hooks";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useConfirmDialog, useCreateProjectDialog } from "@/hooks/dialog";
-import { deleteProjectMutationFn } from "@/lib/api";
-import type { Pagination } from "@/types/common.type";
 import {
   ArrowRight,
   Folder,
@@ -16,7 +8,13 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
+import { DialogLayout } from "@/components/common/dialog-layout";
+import { PermissionsGuard } from "@/components/common/permission-guard";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -33,10 +32,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { DialogLayout } from "@/components/common/dialog-layout";
-import { PermissionsGuard } from "@/components/common/permission-guard";
+
+import { Permissions } from "@/constants";
+import { useGetProjectsInWorkspace } from "@/hooks";
+import { useConfirmDialog, useCreateProjectDialog } from "@/hooks/dialog";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { deleteProjectMutationFn } from "@/lib/api";
+import type { Pagination } from "@/types/common.type";
 
 export function NavProjects() {
   const navigate = useNavigate();
@@ -104,29 +106,29 @@ export function NavProjects() {
 
   return (
     <>
-      <SidebarGroup className='group-data-[collapsible=icon]:hidden'>
-        <SidebarGroupLabel className='w-full justify-between pr-0'>
+      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        <SidebarGroupLabel className="w-full justify-between pr-0">
           <span>Projects</span>
           <PermissionsGuard requiredPermission={Permissions.CREATE_PROJECT}>
             <button
               onClick={onOpen}
-              type='button'
-              className='flex size-5 items-center justify-center rounded-full border'
+              type="button"
+              className="flex size-5 items-center justify-center rounded-full border"
             >
-              <Plus className='size-3.5' />
+              <Plus className="size-3.5" />
             </button>
           </PermissionsGuard>
         </SidebarGroupLabel>
-        <ScrollArea className='h-[220px] pb-6 pr-1'>
+        <ScrollArea className="h-[220px] pr-1 pb-6">
           <SidebarMenu>
             {isError ? <div>Error occured</div> : null}
             {isPending ? (
-              <Loader className='size-5 animate-spin place-self-center' />
+              <Loader className="size-5 animate-spin place-self-center" />
             ) : null}
 
             {!isPending && projects?.length === 0 ? (
-              <div className='pl-3'>
-                <p className='text-xs text-muted-foreground'>
+              <div className="pl-3">
+                <p className="text-muted-foreground text-xs">
                   There is no projects in this Workspace yet. Projects you
                   create will show up here.
                 </p>
@@ -134,9 +136,9 @@ export function NavProjects() {
                   requiredPermission={Permissions.CREATE_PROJECT}
                 >
                   <Button
-                    variant='link'
-                    type='button'
-                    className='h-0 p-0 text-[13px] underline font-semibold mt-4'
+                    variant="link"
+                    type="button"
+                    className="mt-4 h-0 p-0 text-[13px] font-semibold underline"
                     onClick={onOpen}
                   >
                     Create a project
@@ -155,7 +157,7 @@ export function NavProjects() {
                       isActive={projectUrl === pathname}
                     >
                       <Link to={projectUrl}>
-                        <img src='/bar-chart.svg' alt='P' className='w-6 h-6' />
+                        <img src="/bar-chart.svg" alt="P" className="h-6 w-6" />
                         <span>{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -163,18 +165,18 @@ export function NavProjects() {
                       <DropdownMenuTrigger asChild>
                         <SidebarMenuAction showOnHover>
                           <MoreHorizontal />
-                          <span className='sr-only'>More</span>
+                          <span className="sr-only">More</span>
                         </SidebarMenuAction>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
-                        className='w-48 rounded-lg'
+                        className="w-48 rounded-lg"
                         side={isMobile ? "bottom" : "right"}
                         align={isMobile ? "end" : "start"}
                       >
                         <DropdownMenuItem
                           onClick={() => navigate(`${projectUrl}`)}
                         >
-                          <Folder className='text-muted-foreground' />
+                          <Folder className="text-muted-foreground" />
                           <span>View Project</span>
                         </DropdownMenuItem>
 
@@ -186,7 +188,7 @@ export function NavProjects() {
                             disabled={isLoading}
                             onClick={() => onOpenDialog(item)}
                           >
-                            <Trash2 className='text-muted-foreground' />
+                            <Trash2 className="text-muted-foreground" />
                             <span>Delete Project</span>
                           </DropdownMenuItem>
                         </PermissionsGuard>
@@ -200,11 +202,11 @@ export function NavProjects() {
             {hasMore && (
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className='text-sidebar-foreground/70'
+                  className="text-sidebar-foreground/70"
                   disabled={isFetching}
                   onClick={fetchNextPage}
                 >
-                  <MoreHorizontal className='text-sidebar-foreground/70' />
+                  <MoreHorizontal className="text-sidebar-foreground/70" />
                   <span>{isFetching ? "Loading..." : "More"}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -219,16 +221,16 @@ export function NavProjects() {
         header={`Delete ${content?.name} Project`}
         description={`Are you sure you want to delete? This action cannot be undone.`}
       >
-        <div className='w-full flex justify-center gap-8'>
+        <div className="flex w-full justify-center gap-8">
           <Button
             disabled={isLoading}
             onClick={onCloseDialog}
-            variant='outline'
+            variant="outline"
           >
             Cancel
           </Button>
           <Button disabled={isLoading} onClick={handleDelete}>
-            {isLoading ? <Loader className='w-4 h-4 animate-spin' /> : "Delete"}
+            {isLoading ? <Loader className="h-4 w-4 animate-spin" /> : "Delete"}
           </Button>
         </div>
       </DialogLayout>

@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { createProjectMutationFn } from "@/lib/api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCreateProjectDialog } from "@/hooks/dialog";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import type { CreateProjectInput } from "@/types/project.type";
-import { createProjectSchema } from "@/validators/project.validator";
+import { toast } from "sonner";
+
+import { DialogLayout } from "@/components/common/dialog-layout";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,9 +17,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { DialogLayout } from "@/components/common/dialog-layout";
+
+import { useCreateProjectDialog } from "@/hooks/dialog";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { createProjectMutationFn } from "@/lib/api";
+import type { CreateProjectInput } from "@/types/project.type";
+import { createProjectSchema } from "@/validators/project.validator";
 
 export const CreateProjectDialog = () => {
   const navigate = useNavigate();
@@ -68,16 +70,16 @@ export const CreateProjectDialog = () => {
     <DialogLayout
       open={open}
       onClose={onClose}
-      header='Add New Project'
-      description='Organize and manage tasks, resources, and team collaboration'
+      header="Add New Project"
+      description="Organize and manage tasks, resources, and team collaboration"
       footer={
         <Button
-          type='submit'
+          type="submit"
           disabled={isPending}
-          form='create-project-form'
-          className='w-full'
+          form="create-project-form"
+          className="w-full"
         >
-          {isPending && <Loader className='w-4 h-4 animate-spin' />}
+          {isPending && <Loader className="h-4 w-4 animate-spin" />}
           Create
         </Button>
       }
@@ -85,17 +87,17 @@ export const CreateProjectDialog = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          id='create-project-form'
-          className='space-y-4'
+          id="create-project-form"
+          className="space-y-4"
         >
           <FormField
             control={form.control}
-            name='name'
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Project title</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter project name' {...field} />
+                  <Input placeholder="Enter project name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,14 +105,14 @@ export const CreateProjectDialog = () => {
           />
           <FormField
             control={form.control}
-            name='description'
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Project description</FormLabel>
                 <FormControl>
                   <Textarea
                     rows={4}
-                    placeholder='Enter Projects description'
+                    placeholder="Enter Projects description"
                     {...field}
                   />
                 </FormControl>

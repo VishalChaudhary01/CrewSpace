@@ -1,14 +1,13 @@
-import { toast } from "sonner";
-import { format } from "date-fns";
-import { useForm } from "react-hook-form";
-import { CalendarIcon, Loader } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTaskMutationFn } from "@/lib/api";
-import { useCreateTaskDialog } from "@/hooks/dialog";
-import { TaskPriority, TaskStatus } from "@/constants";
-import { createTaskSchema } from "@/validators/task.validator";
-import { cn, transformOptions } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon, Loader } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { DialogLayout } from "@/components/common/dialog-layout";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -17,6 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -24,20 +29,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+
+import { TaskPriority, TaskStatus } from "@/constants";
 import { getMemberOptions, getProjectOptions } from "@/hoc/options";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useGetMembersInWorkspace, useGetProjectsInWorkspace } from "@/hooks";
+import { useCreateTaskDialog } from "@/hooks/dialog";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { createTaskMutationFn } from "@/lib/api";
+import { cn, transformOptions } from "@/lib/utils";
 import type { CreateTaskInput } from "@/types/task.type";
-import { DialogLayout } from "@/components/common/dialog-layout";
-import { Calendar } from "@/components/ui/calendar";
+import { createTaskSchema } from "@/validators/task.validator";
 
 export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
   const queryClient = useQueryClient();
@@ -103,16 +105,16 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
     <DialogLayout
       open={open}
       onClose={onClose}
-      header='Create New Project'
-      description='Organize and manage tasks, resources, and team collaboration'
+      header="Create New Project"
+      description="Organize and manage tasks, resources, and team collaboration"
       footer={
         <Button
-          type='submit'
+          type="submit"
           disabled={isPending}
-          form='create-task-form'
-          className='w-full'
+          form="create-task-form"
+          className="w-full"
         >
-          {isPending && <Loader className='w-4 h-4 animate-spin' />}
+          {isPending && <Loader className="h-4 w-4 animate-spin" />}
           Create
         </Button>
       }
@@ -120,17 +122,17 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          id='create-task-form'
-          className='space-y-4'
+          id="create-task-form"
+          className="space-y-4"
         >
           <FormField
             control={form.control}
-            name='title'
+            name="title"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Task title</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter task title' {...field} />
+                  <Input placeholder="Enter task title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,14 +141,14 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
 
           <FormField
             control={form.control}
-            name='description'
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Task description</FormLabel>
                 <FormControl>
                   <Textarea
                     rows={4}
-                    placeholder='Enter task description'
+                    placeholder="Enter task description"
                     {...field}
                   />
                 </FormControl>
@@ -160,7 +162,7 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
             <div>
               <FormField
                 control={form.control}
-                name='projectId'
+                name="projectId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Project</FormLabel>
@@ -170,20 +172,20 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder='Select Project' />
+                          <SelectValue placeholder="Select Project" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {isLoading && (
-                          <div className='my-2'>
-                            <Loader className='size-4 place-self-center flex animate-spin' />
+                          <div className="my-2">
+                            <Loader className="flex size-4 animate-spin place-self-center" />
                           </div>
                         )}
-                        <div className='w-full max-h-[200px] overflow-y-auto scrollbar'>
+                        <div className="scrollbar max-h-[200px] w-full overflow-y-auto">
                           {projectOptions?.map((project) => (
                             <SelectItem
                               key={project.value}
-                              className='!capitalize cursor-pointer'
+                              className="cursor-pointer !capitalize"
                               value={project.value}
                             >
                               {project.label}
@@ -202,7 +204,7 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
           {/* Assigned To */}
           <FormField
             control={form.control}
-            name='assignedTo'
+            name="assignedTo"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Assigned To</FormLabel>
@@ -212,14 +214,14 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder='Select Assignee' />
+                      <SelectValue placeholder="Select Assignee" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <div className='w-full max-h-[200px] overflow-y-auto scrollbar'>
+                    <div className="scrollbar max-h-[200px] w-full overflow-y-auto">
                       {memberOptions?.map((member) => (
                         <SelectItem
-                          className='cursor-pointer'
+                          className="cursor-pointer"
                           key={member.value}
                           value={member.value}
                         >
@@ -237,15 +239,15 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
           {/* Due Date */}
           <FormField
             control={form.control}
-            name='dueDate'
+            name="dueDate"
             render={({ field }) => (
-              <FormItem className='flex flex-col'>
+              <FormItem className="flex flex-col">
                 <FormLabel>Due Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        variant='outline'
+                        variant="outline"
                         className={cn(
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground",
@@ -256,13 +258,13 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <CalendarIcon className='w-4 h-4 ml-auto opacity-50' />
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0 z-50' align='start'>
+                  <PopoverContent className="z-50 w-auto p-0" align="start">
                     <Calendar
-                      mode='single'
+                      mode="single"
                       selected={field.value ? new Date(field.value) : undefined}
                       onSelect={(date) => {
                         if (date) {
@@ -277,7 +279,7 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                       initialFocus
                       defaultMonth={new Date()}
                       fromMonth={new Date()}
-                      className='pointer-events-auto'
+                      className="pointer-events-auto"
                     />
                   </PopoverContent>
                 </Popover>
@@ -289,7 +291,7 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
           {/* {Status} */}
           <FormField
             control={form.control}
-            name='status'
+            name="status"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Status</FormLabel>
@@ -300,15 +302,15 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue
-                        className='!text-muted-foreground !capitalize'
-                        placeholder='Select a status'
+                        className="!text-muted-foreground !capitalize"
+                        placeholder="Select a status"
                       />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     {statusOptions?.map((status) => (
                       <SelectItem
-                        className='!capitalize'
+                        className="!capitalize"
                         key={status.value}
                         value={status.value}
                       >
@@ -325,7 +327,7 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
           {/* {Priority} */}
           <FormField
             control={form.control}
-            name='priority'
+            name="priority"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Priority</FormLabel>
@@ -335,13 +337,13 @@ export const CreateTaskDialog = ({ projectId }: { projectId?: string }) => {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder='Select a priority' />
+                      <SelectValue placeholder="Select a priority" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     {priorityOptions?.map((priority) => (
                       <SelectItem
-                        className='!capitalize'
+                        className="!capitalize"
                         key={priority.value}
                         value={priority.value}
                       >

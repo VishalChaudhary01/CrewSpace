@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { TaskPriority, TaskStatus } from "@/constants";
 
 export const nameSchema = z
@@ -43,12 +44,16 @@ export const assignedToSchema = z
 
 export const prioritySchema = z.enum(
   Object.values(TaskPriority) as [string, ...string[]],
-  { required_error: "Priority is required" },
+  {
+    required_error: "Priority is required",
+  },
 );
 
 export const statusSchema = z.enum(
   Object.values(TaskStatus) as [string, ...string[]],
-  { required_error: "Status is required" },
+  {
+    required_error: "Status is required",
+  },
 );
 
 export const dueDateSchema = z

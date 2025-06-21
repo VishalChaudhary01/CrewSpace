@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from "react";
-import { toast } from "sonner";
-import { Loader } from "lucide-react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Permissions } from "@/constants";
-import { updateWorkspaceMutationFn } from "@/lib/api";
-import { useAuthContext } from "@/contexts/auth.context";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import type { UpdateWorkspaceInput } from "@/types/workspace.type";
-import { updateWorkspaceSchema } from "@/validators/workspace.validator";
+import { Loader } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { Textarea } from "@/components//ui/textarea";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -20,8 +17,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components//ui/textarea";
+
+import { Permissions } from "@/constants";
+import { useAuthContext } from "@/contexts/auth.context";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { updateWorkspaceMutationFn } from "@/lib/api";
+import type { UpdateWorkspaceInput } from "@/types/workspace.type";
+import { updateWorkspaceSchema } from "@/validators/workspace.validator";
 
 export const EditWorkspaceForm = () => {
   const { workspace, hasPermission } = useAuthContext();
@@ -73,27 +75,24 @@ export const EditWorkspaceForm = () => {
   };
 
   return (
-    <div className='w-full h-auto max-w-full'>
-      <div className='h-full'>
-        <div className='mb-5 border-b'>
-          <h1
-            className='text-[17px] tracking-[-0.16px] font-semibold mb-1.5
-           text-center sm:text-left'
-          >
+    <div className="h-auto w-full max-w-full">
+      <div className="h-full">
+        <div className="mb-5 border-b">
+          <h1 className="mb-1.5 text-center text-[17px] font-semibold tracking-[-0.16px] sm:text-left">
             Update Workspace
           </h1>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name='name'
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Workspace Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='Enter workspace name'
+                      placeholder="Enter workspace name"
                       disabled={!canEditWorkspace}
                       {...field}
                     />
@@ -104,12 +103,12 @@ export const EditWorkspaceForm = () => {
             />
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
                     Workspace description
-                    <span className='text-xs font-extralight ml-2'>
+                    <span className="ml-2 text-xs font-extralight">
                       Optional
                     </span>
                   </FormLabel>
@@ -117,7 +116,7 @@ export const EditWorkspaceForm = () => {
                     <Textarea
                       rows={6}
                       disabled={!canEditWorkspace}
-                      placeholder='Enter description of workspace.'
+                      placeholder="Enter description of workspace."
                       {...field}
                     />
                   </FormControl>
@@ -127,12 +126,12 @@ export const EditWorkspaceForm = () => {
             />
             {canEditWorkspace && (
               <Button
-                className='flex place-self-end mt-2'
+                className="mt-2 flex place-self-end"
                 disabled={isPending}
-                type='submit'
+                type="submit"
               >
                 {isPending ? (
-                  <Loader className='w-4 h-4 animate-spin' />
+                  <Loader className="h-4 w-4 animate-spin" />
                 ) : (
                   "Update Workspace"
                 )}

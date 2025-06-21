@@ -1,21 +1,24 @@
+import { X } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { getColumns } from "./table/columns";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { priorities, statuses } from "./table/data";
+import { DataTable } from "./table/data-table";
+import { DataTableFacetedFilter } from "./table/table-faceted-filter";
+
+import { getMemberOptions, getProjectOptions } from "@/hoc/options";
 import {
   useGetAllTasks,
   useGetMembersInWorkspace,
   useGetProjectsInWorkspace,
 } from "@/hooks";
-import type { Task } from "@/types/task.type";
-import { DataTable } from "./table/data-table";
-import { DataTableFacetedFilter } from "./table/table-faceted-filter";
-import { priorities, statuses } from "./table/data";
-import { getMemberOptions, getProjectOptions } from "@/hoc/options";
 import { useTaskTableFilter } from "@/hooks/use-task-table-filter";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import type { Task } from "@/types/task.type";
 
 export type Filters = ReturnType<typeof useTaskTableFilter>[0];
 type SetFilters = ReturnType<typeof useTaskTableFilter>[1];
@@ -58,7 +61,7 @@ export const TaskTable = () => {
   };
 
   return (
-    <div className='w-full relative'>
+    <div className="relative w-full">
       <DataTable
         isLoading={isLoading}
         data={tasks}
@@ -104,20 +107,20 @@ const DataTableFilterToolbar = ({
   };
 
   return (
-    <div className='flex flex-col lg:flex-row w-full items-start space-y-2 mb-2 lg:mb-0 lg:space-x-2  lg:space-y-0'>
+    <div className="mb-2 flex w-full flex-col items-start space-y-2 lg:mb-0 lg:flex-row lg:space-y-0 lg:space-x-2">
       <Input
-        placeholder='Filter tasks...'
+        placeholder="Filter tasks..."
         value={filters.keyword || ""}
         onChange={(e) =>
           setFilters({
             keyword: e.target.value,
           })
         }
-        className='h-8 w-full lg:w-[250px]'
+        className="h-8 w-full lg:w-[250px]"
       />
       {/* Status filter */}
       <DataTableFacetedFilter
-        title='Status'
+        title="Status"
         multiSelect={true}
         options={statuses}
         disabled={isLoading}
@@ -129,7 +132,7 @@ const DataTableFilterToolbar = ({
 
       {/* Priority filter */}
       <DataTableFacetedFilter
-        title='Priority'
+        title="Priority"
         multiSelect={true}
         options={priorities}
         disabled={isLoading}
@@ -141,7 +144,7 @@ const DataTableFilterToolbar = ({
 
       {/* Assigned To filter */}
       <DataTableFacetedFilter
-        title='Assigned To'
+        title="Assigned To"
         multiSelect={true}
         options={assigneesOptions}
         disabled={isLoading}
@@ -153,7 +156,7 @@ const DataTableFilterToolbar = ({
 
       {!projectId && (
         <DataTableFacetedFilter
-          title='Projects'
+          title="Projects"
           multiSelect={false}
           options={projectOptions}
           disabled={isLoading}
@@ -169,8 +172,8 @@ const DataTableFilterToolbar = ({
       ) && (
         <Button
           disabled={isLoading}
-          variant='ghost'
-          className='h-8 px-2 lg:px-3'
+          variant="ghost"
+          className="h-8 px-2 lg:px-3"
           onClick={() =>
             setFilters({
               keyword: null,
@@ -182,7 +185,7 @@ const DataTableFilterToolbar = ({
           }
         >
           Reset
-          <X className='w-4 h-4' />
+          <X className="h-4 w-4" />
         </Button>
       )}
     </div>

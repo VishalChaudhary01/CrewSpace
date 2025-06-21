@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { ChevronDown, Loader } from "lucide-react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -12,6 +10,16 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
+import { ChevronDown, Loader } from "lucide-react";
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -20,13 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { DataTablePagination } from "./table-pagination";
 
 interface PaginationProps {
@@ -83,16 +85,16 @@ export const DataTable = <TData, TValue>({
   });
 
   return (
-    <div className='w-full space-y-2'>
-      <div className='block w-full lg:flex lg:items-center lg:justify-between'>
-        {filtersToolbar && <div className='flex-1'> {filtersToolbar}</div>}
+    <div className="w-full space-y-2">
+      <div className="block w-full lg:flex lg:items-center lg:justify-between">
+        {filtersToolbar && <div className="flex-1"> {filtersToolbar}</div>}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='outline' className='ml-auto w-full lg:w-auto'>
-              Columns <ChevronDown className='w-4 h-4' />
+            <Button variant="outline" className="ml-auto w-full lg:w-auto">
+              Columns <ChevronDown className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
+          <DropdownMenuContent align="end">
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
@@ -100,7 +102,7 @@ export const DataTable = <TData, TValue>({
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className='capitalize'
+                    className="capitalize"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -113,9 +115,9 @@ export const DataTable = <TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className='rounded-md border'>
+      <div className="rounded-md border">
         {isLoading ? (
-          <Loader className='size-8 animate-spin flex place-self-center' />
+          <Loader className="flex size-8 animate-spin place-self-center" />
         ) : (
           <Table>
             <TableHeader>
@@ -157,7 +159,7 @@ export const DataTable = <TData, TValue>({
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
-                    className='h-24 text-center'
+                    className="h-24 text-center"
                   >
                     No results.
                   </TableCell>

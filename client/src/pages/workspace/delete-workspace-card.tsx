@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Permissions } from "@/constants";
-import { deleteWorkspaceMutationFn } from "@/lib/api";
-import { useConfirmDialog } from "@/hooks/dialog";
-import { useGetAllWorkspacesUserIsMember } from "@/hooks";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useAuthContext } from "@/contexts/auth.context";
-import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+
 import { DialogLayout } from "@/components/common/dialog-layout";
 import { PermissionsGuard } from "@/components/common/permission-guard";
+import { Button } from "@/components/ui/button";
+
+import { Permissions } from "@/constants";
+import { useAuthContext } from "@/contexts/auth.context";
+import { useGetAllWorkspacesUserIsMember } from "@/hooks";
+import { useConfirmDialog } from "@/hooks/dialog";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { deleteWorkspaceMutationFn } from "@/lib/api";
 
 export const DeleteWorkspaceCard = () => {
   const { workspace } = useAuthContext();
@@ -55,12 +57,9 @@ export const DeleteWorkspaceCard = () => {
 
   return (
     <>
-      <div className='w-full'>
-        <div className='mb-5 border-b'>
-          <h1
-            className='text-[17px] tracking-[-0.16px] font-semibold mb-1.5
-           text-center sm:text-left'
-          >
+      <div className="w-full">
+        <div className="mb-5 border-b">
+          <h1 className="mb-1.5 text-center text-[17px] font-semibold tracking-[-0.16px] sm:text-left">
             Delete Workspace
           </h1>
         </div>
@@ -69,8 +68,8 @@ export const DeleteWorkspaceCard = () => {
           showMessage
           requiredPermission={Permissions.DELETE_WORKSPACE}
         >
-          <div className='flex flex-col items-start justify-between py-0'>
-            <div className='flex-1 mb-2'>
+          <div className="flex flex-col items-start justify-between py-0">
+            <div className="mb-2 flex-1">
               <p>
                 Deleting a workspace is a permanent action and cannot be undone.
                 Once you delete a workspace, all its associated data, including
@@ -80,8 +79,8 @@ export const DeleteWorkspaceCard = () => {
               </p>
             </div>
             <Button
-              className='flex place-self-end'
-              variant='destructive'
+              className="flex place-self-end"
+              variant="destructive"
               onClick={onOpenDialog}
             >
               Delete Workspace
@@ -96,16 +95,16 @@ export const DeleteWorkspaceCard = () => {
         header={`Delete "${workspace?.name}" Workspace`}
         description={`Are you sure you want to delete? This action cannot be undone.`}
       >
-        <div className='w-full flex justify-center gap-8'>
+        <div className="flex w-full justify-center gap-8">
           <Button
             disabled={isPending}
             onClick={onCloseDialog}
-            variant='outline'
+            variant="outline"
           >
             Cancel
           </Button>
           <Button disabled={isPending} onClick={handleDelete}>
-            {isPending ? <Loader className='w-4 h-4 animate-spin' /> : "Delete"}
+            {isPending ? <Loader className="h-4 w-4 animate-spin" /> : "Delete"}
           </Button>
         </div>
       </DialogLayout>

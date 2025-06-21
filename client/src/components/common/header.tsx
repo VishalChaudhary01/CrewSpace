@@ -1,4 +1,5 @@
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,9 +8,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link, useLocation } from "react-router-dom";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+
 import { Separator } from "../ui/separator";
+
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
 export const Header = () => {
   const location = useLocation();
@@ -27,19 +30,19 @@ export const Header = () => {
 
   const pageHeading = getPageLabel(pathname);
   return (
-    <header className='flex sticky top-0 z-100 h-12 shrink-0 items-center border-b'>
-      <div className='flex flex-1 items-center gap-2 px-3'>
+    <header className="sticky top-0 z-100 flex h-12 shrink-0 items-center border-b">
+      <div className="flex flex-1 items-center gap-2 px-3">
         <SidebarTrigger />
-        <Separator orientation='vertical' className='mr-2 h-4' />
+        <Separator orientation="vertical" className="mr-2 h-4" />
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem className='hidden md:block text-[15px]'>
+            <BreadcrumbItem className="hidden text-[15px] md:block">
               {pageHeading ? (
                 <BreadcrumbLink asChild>
                   <Link to={`/workspace/${workspaceId}`}>Dashboard</Link>
                 </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage className='line-clamp-1 '>
+                <BreadcrumbPage className="line-clamp-1">
                   Dashboard
                 </BreadcrumbPage>
               )}
@@ -47,9 +50,9 @@ export const Header = () => {
 
             {pageHeading && (
               <>
-                <BreadcrumbSeparator className='hidden md:block' />
-                <BreadcrumbItem className='text-[15px]'>
-                  <BreadcrumbPage className='line-clamp-1'>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem className="text-[15px]">
+                  <BreadcrumbPage className="line-clamp-1">
                     {pageHeading}
                   </BreadcrumbPage>
                 </BreadcrumbItem>

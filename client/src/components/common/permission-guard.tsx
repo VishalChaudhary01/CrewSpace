@@ -1,4 +1,5 @@
 import React from "react";
+
 import type { PermissionType } from "@/constants";
 import { useAuthContext } from "@/contexts/auth.context";
 
@@ -18,7 +19,7 @@ export const PermissionsGuard: React.FC<PermissionsGuardProps> = ({
   if (!hasPermission(requiredPermission)) {
     return (
       showMessage && (
-        <div className='text-center text-sm pt-3 italic w-full text-muted-foreground'>
+        <div className="text-muted-foreground w-full pt-3 text-center text-sm italic">
           You do not have the permission to view this
         </div>
       )

@@ -1,23 +1,10 @@
 import API from "./axios-client";
-import type { UserResponse } from "@/types/user.type";
+
 import type {
   AuthResponse,
   SigninRequest,
   SignupRequest,
 } from "@/types/auth.type";
-import type {
-  AllWorkspacesResponse,
-  ChangeWorkspaceMemberRoleRequest,
-  ChangeWorkspaceMemberRoleResponse,
-  CreateWorkspaceRequest,
-  GetMembersInWorkspaceResponse,
-  InvitedUserJoinWorkspaceRequest,
-  InvitedUserJoinWorkspaceResponse,
-  UpdateWorkspaceRequest,
-  WorkspaceRequest,
-  WorkspaceResponse,
-  WorkspaceWithMembersResponse,
-} from "@/types/workspace.type";
 import type { AnalyticsResponse, BaseResponse } from "@/types/common.type";
 import type {
   AllProjectRequest,
@@ -35,6 +22,20 @@ import type {
   TaskResponse,
   UpdateTaskRequest,
 } from "@/types/task.type";
+import type { UserResponse } from "@/types/user.type";
+import type {
+  AllWorkspacesResponse,
+  ChangeWorkspaceMemberRoleRequest,
+  ChangeWorkspaceMemberRoleResponse,
+  CreateWorkspaceRequest,
+  GetMembersInWorkspaceResponse,
+  InvitedUserJoinWorkspaceRequest,
+  InvitedUserJoinWorkspaceResponse,
+  UpdateWorkspaceRequest,
+  WorkspaceRequest,
+  WorkspaceResponse,
+  WorkspaceWithMembersResponse,
+} from "@/types/workspace.type";
 
 /************ AUTH API ************/
 export const signinMutationFn = async ({

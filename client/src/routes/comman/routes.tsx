@@ -1,15 +1,16 @@
-import { SignUpPage } from "@/pages/auth/signup.page";
 import { AUTH_ROUTES, BASE_ROUTE, PROTECTED_ROUTES } from "./route-path";
-import { SignInPage } from "@/pages/auth/signin.page";
-import { WorkspaceDashboardPage } from "@/pages/workspace/dashboard.page";
-import { TasksPage } from "@/pages/workspace/tasks.page";
-import { MembersPage } from "@/pages/workspace/members.page";
-import { SettingsPage } from "@/pages/workspace/settings.page";
-import { ProjectDetailsPage } from "@/pages/workspace/project-details.page";
-import { InvitePage } from "@/pages/invite/invite.page";
+
 import { EmailVerificationPage } from "@/pages/auth/email-verification";
 import { ForgotPasswordPage } from "@/pages/auth/forgot-password.page";
 import { ResetPasswordPage } from "@/pages/auth/reset-password";
+import { SignInPage } from "@/pages/auth/signin.page";
+import { SignUpPage } from "@/pages/auth/signup.page";
+import { InvitePage } from "@/pages/invite/invite.page";
+import { WorkspaceDashboardPage } from "@/pages/workspace/dashboard.page";
+import { MembersPage } from "@/pages/workspace/members.page";
+import { ProjectDetailsPage } from "@/pages/workspace/project-details.page";
+import { SettingsPage } from "@/pages/workspace/settings.page";
+import { TasksPage } from "@/pages/workspace/tasks.page";
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.SIGN_IN, element: <SignInPage /> },

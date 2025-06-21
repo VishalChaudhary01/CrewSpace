@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -28,14 +29,14 @@ export const DialogLayout: React.FC<DialogLayoutProps> = ({
 }) => {
   return (
     <Dialog modal={true} open={open} onOpenChange={onClose}>
-      <DialogContent className='max-h-[90vh] overflow-hidden'>
+      <DialogContent className="max-h-[90vh] overflow-hidden">
         <DialogHeader>
-          <DialogTitle className='text-xl md:text-2xl font-bold'>
+          <DialogTitle className="text-xl font-bold md:text-2xl">
             {header}
           </DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
-        <ScrollArea className='pr-4 max-h-[60vh]'>{children}</ScrollArea>
+        <ScrollArea className="max-h-[60vh] pr-4">{children}</ScrollArea>
         <DialogFooter>{footer}</DialogFooter>
       </DialogContent>
     </Dialog>

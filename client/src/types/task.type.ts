@@ -1,16 +1,19 @@
 import type { z } from "zod";
-import type { TaskPriorityType, TaskStatusType } from "@/constants";
+
+import type { Filters } from "@/components/workspace/task/task-table";
+
 import type {
   BaseEntity,
   BaseResponse,
   BaseUser,
   Pagination,
 } from "./common.type";
+
+import type { TaskPriorityType, TaskStatusType } from "@/constants";
 import type {
   createTaskSchema,
   updateTaskSchema,
 } from "@/validators/task.validator";
-import type { Filters } from "@/components/workspace/task/task-table";
 
 export interface Task extends BaseEntity {
   title: string;

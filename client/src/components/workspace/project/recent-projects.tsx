@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
 import { Link } from "react-router-dom";
+
 import { useGetProjectsInWorkspace } from "@/hooks";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { getAvatarColor, getAvatarText } from "@/lib/utils";
@@ -17,15 +18,15 @@ export const RecentProjects = () => {
   const projects = data?.data?.projects || [];
 
   return (
-    <div className='flex flex-col pt-2'>
+    <div className="flex flex-col pt-2">
       {isPending ? (
-        <Loader className='w-8 h-8 animate-spin place-self-center flex' />
+        <Loader className="flex h-8 w-8 animate-spin place-self-center" />
       ) : projects?.length === 0 ? (
-        <div className='font-semibold text-sm text-muted-foreground text-center py-5'>
+        <div className="text-muted-foreground py-5 text-center text-sm font-semibold">
           No Project created yet
         </div>
       ) : (
-        <ul role='list' className='space-y-2 divide-y divide-border/50'>
+        <ul role="list" className="divide-border/50 space-y-2 divide-y">
           {projects.map((project) => {
             const name = project.createdBy.name;
             const initials = getAvatarText(name);
@@ -34,31 +35,31 @@ export const RecentProjects = () => {
             return (
               <li
                 key={project._id}
-                role='listitem'
-                className='cursor-pointer p-2 md:px-4 hover:bg-gray-50 transition-colors ease-in-out duration-200 rounded-md'
+                role="listitem"
+                className="cursor-pointer rounded-md p-2 transition-colors duration-200 ease-in-out hover:bg-gray-50 md:px-4"
               >
                 <Link
                   to={`/workspace/${workspaceId}/project/${project._id}`}
-                  className='grid gap-8 p-0'
+                  className="grid gap-8 p-0"
                 >
-                  <div className='flex items-center justify-start gap-2'>
-                    <img src='/bar-chart.svg' className='w-6 h-6' />
-                    <div className='grid gap-1'>
-                      <p className='text-sm font-medium leading-none'>
+                  <div className="flex items-center justify-start gap-2">
+                    <img src="/bar-chart.svg" className="h-6 w-6" />
+                    <div className="grid gap-1">
+                      <p className="text-sm leading-none font-medium">
                         {project.name}
                       </p>
-                      <p className='text-sm text-muted-foreground'>
+                      <p className="text-muted-foreground text-sm">
                         {project.createdAt
                           ? format(new Date(project.createdAt), "PPP")
                           : null}
                       </p>
                     </div>
-                    <div className='ml-auto flex items-center gap-4'>
-                      <span className='text-sm text-muted-foreground'>
+                    <div className="ml-auto flex items-center gap-4">
+                      <span className="text-muted-foreground text-sm">
                         Created by
                       </span>
                       <div
-                        className={`hidden sm:flex items-center justify-center rounded-full p-2 size-8 text-sm ${avatarColor}`}
+                        className={`hidden size-8 items-center justify-center rounded-full p-2 text-sm sm:flex ${avatarColor}`}
                       >
                         {initials}
                       </div>

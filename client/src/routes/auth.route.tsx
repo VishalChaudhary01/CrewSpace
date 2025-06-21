@@ -1,6 +1,8 @@
 import { Loader } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+
 import { isAuthRoute } from "./comman/route-path";
+
 import { useAuth } from "@/hooks";
 
 export const AuthRoute = () => {
@@ -13,7 +15,7 @@ export const AuthRoute = () => {
   const authRoute = isAuthRoute(location.pathname);
 
   if (isLoading && !authRoute)
-    return <Loader className='w-8 h-8 animate-spin place-self-center flex' />;
+    return <Loader className="flex h-8 w-8 animate-spin place-self-center" />;
 
   return !user ? (
     <Outlet />

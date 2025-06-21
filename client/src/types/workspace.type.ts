@@ -1,10 +1,12 @@
 import type { z } from "zod";
+
+import type { BaseEntity, BaseResponse, BaseUser } from "./common.type";
 import type { Role } from "./user.type";
+
 import {
   createWorkspaceSchema,
   updateWorkspaceSchema,
 } from "@/validators/workspace.validator";
-import type { BaseEntity, BaseResponse, BaseUser } from "./common.type";
 
 export interface WorkspaceBasic extends BaseEntity {
   name: string;

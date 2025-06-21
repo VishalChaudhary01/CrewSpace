@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext } from "react";
-import type { User } from "@/types/user.type";
+
 import type { PermissionType } from "@/constants";
+import type { User } from "@/types/user.type";
 import type { WorkspaceWithMembers } from "@/types/workspace.type";
 
 type AuthContextType = {

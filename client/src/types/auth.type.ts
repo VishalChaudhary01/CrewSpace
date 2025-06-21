@@ -1,7 +1,9 @@
 import type { z } from "zod";
+
 import type { BaseResponse } from "./common.type";
-import type { signinSchema, signupSchema } from "@/validators/auth.validator";
 import type { User } from "./user.type";
+
+import type { signinSchema, signupSchema } from "@/validators/auth.validator";
 
 export type SignupInput = z.infer<typeof signupSchema>;
 export type SigninInput = z.infer<typeof signinSchema>;

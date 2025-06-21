@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@/hooks";
-import { BASE_ROUTE } from "@/routes/comman/route-path";
-import { invitedUserJoinWorkspaceMutationFn } from "@/lib/api";
-import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+
 import { CardLayout } from "@/components/common/card-layout";
+import { Button } from "@/components/ui/button";
+
+import { useAuth } from "@/hooks";
+import { invitedUserJoinWorkspaceMutationFn } from "@/lib/api";
+import { BASE_ROUTE } from "@/routes/comman/route-path";
 
 export const InvitePage = () => {
   const navigate = useNavigate();
@@ -49,34 +51,34 @@ export const InvitePage = () => {
   };
 
   return (
-    <div className='flex min-h-svh flex-col items-center justify-center p-6 md:p-10'>
-      <div className='flex w-full max-w-md flex-col gap-6'>
+    <div className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+      <div className="flex w-full max-w-md flex-col gap-6">
         <Link
-          to='/'
-          className='flex items-center gap-2 self-center font-semibold text-base'
+          to="/"
+          className="flex items-center gap-2 self-center text-base font-semibold"
         >
           CrewSpace
         </Link>
-        <div className='flex flex-col gap-6'>
+        <div className="flex flex-col gap-6">
           <CardLayout
-            header='Hey there! You are invited to join a CrewSpace Workspace!'
-            description='Looks like you need to be logged into your CrewSpace account to
-                join this Workspace.'
+            header="Hey there! You are invited to join a CrewSpace Workspace!"
+            description="Looks like you need to be logged into your CrewSpace account to
+                join this Workspace."
           >
             {isPending ? (
-              <Loader className='w-8 h-8 animate-spin place-self-center flex' />
+              <Loader className="flex h-8 w-8 animate-spin place-self-center" />
             ) : (
               <div>
                 {user ? (
-                  <div className='flex items-center justify-center my-3'>
+                  <div className="my-3 flex items-center justify-center">
                     <form onSubmit={handleSubmit}>
                       <Button
-                        type='submit'
+                        type="submit"
                         disabled={isLoading}
-                        className='!bg-green-600 !text-white'
+                        className="!bg-green-600 !text-white"
                       >
                         {isLoading ? (
-                          <Loader className='w-4 h-4 animate-spin' />
+                          <Loader className="h-4 w-4 animate-spin" />
                         ) : (
                           "Join the Workspace"
                         )}
@@ -84,18 +86,18 @@ export const InvitePage = () => {
                     </form>
                   </div>
                 ) : (
-                  <div className='flex flex-col md:flex-row items-center gap-2'>
+                  <div className="flex flex-col items-center gap-2 md:flex-row">
                     <Link
-                      className='flex-1 w-full text-base'
+                      className="w-full flex-1 text-base"
                       to={`/signup?returnUrl=${returnUrl}`}
                     >
-                      <Button className='w-full'>Signup</Button>
+                      <Button className="w-full">Signup</Button>
                     </Link>
                     <Link
-                      className='flex-1 w-full text-base'
+                      className="w-full flex-1 text-base"
                       to={`/?returnUrl=${returnUrl}`}
                     >
-                      <Button variant='secondary' className='w-full border'>
+                      <Button variant="secondary" className="w-full border">
                         Login
                       </Button>
                     </Link>

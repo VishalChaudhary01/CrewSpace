@@ -1,14 +1,16 @@
 import type { z } from "zod";
-import type {
-  createProjectSchema,
-  updateProjectSchema,
-} from "@/validators/project.validator";
+
 import type {
   BaseEntity,
   BaseResponse,
   BaseUser,
   Pagination,
 } from "./common.type";
+
+import type {
+  createProjectSchema,
+  updateProjectSchema,
+} from "@/validators/project.validator";
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 export type UpdateProjectInput = z.infer<typeof updateProjectSchema>;

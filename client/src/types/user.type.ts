@@ -1,6 +1,7 @@
-import type { PermissionType } from "@/constants";
 import type { BaseEntity, BaseResponse } from "./common.type";
 import type { WorkspaceBasic } from "./workspace.type";
+
+import type { PermissionType } from "@/constants";
 
 export interface User extends BaseEntity {
   name: string;

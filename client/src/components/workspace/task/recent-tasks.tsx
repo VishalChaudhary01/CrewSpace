@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
+
+import { useGetAllTasks } from "@/hooks";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import {
   getAvatarColor,
   getAvatarText,
@@ -8,8 +12,6 @@ import {
   getStatusColor,
   transformStatusEnum,
 } from "@/lib/utils";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useGetAllTasks } from "@/hooks";
 import type { Task } from "@/types/task.type";
 
 export const RecentTasks = () => {
@@ -20,18 +22,18 @@ export const RecentTasks = () => {
   const tasks: Task[] = data?.data?.tasks || [];
 
   return (
-    <div className='flex flex-col space-y-6'>
+    <div className="flex flex-col space-y-6">
       {isLoading ? (
-        <Loader className='w-8 h-8  animate-spin place-self-center flex' />
+        <Loader className="flex h-8 w-8 animate-spin place-self-center" />
       ) : null}
 
       {tasks?.length === 0 && (
-        <div className='font-semibold text-sm text-muted-foreground text-center py-5'>
+        <div className="text-muted-foreground py-5 text-center text-sm font-semibold">
           No Task created yet
         </div>
       )}
 
-      <ul role='list' className='divide-y divide-border/50'>
+      <ul role="list" className="divide-border/50 divide-y">
         {tasks.map((task) => {
           const name = task?.assignedTo?.name || "";
           const initials = getAvatarText(name);
@@ -41,42 +43,42 @@ export const RecentTasks = () => {
           return (
             <li
               key={task._id}
-              className='p-4 flex items-center justify-between hover:bg-gray-50 rounded-md transition-colors ease-in-out duration-200'
+              className="flex items-center justify-between rounded-md p-4 transition-colors duration-200 ease-in-out hover:bg-gray-50"
             >
               {/* Task Info */}
-              <div className='flex flex-col space-y-1 flex-grow'>
-                <span className='text-sm capitalize text-muted-foreground font-medium'>
+              <div className="flex flex-grow flex-col space-y-1">
+                <span className="text-muted-foreground text-sm font-medium capitalize">
                   {task.taskCode}
                 </span>
-                <p className='text-md font-semibold truncate'>{task.title}</p>
-                <span className='text-sm text-muted-foreground'>
+                <p className="text-md truncate font-semibold">{task.title}</p>
+                <span className="text-muted-foreground text-sm">
                   Due:{" "}
                   {task.dueDate ? format(new Date(task.dueDate), "PPP") : null}
                 </span>
               </div>
 
               {/* Task Status */}
-              <div className='text-sm font-medium '>
+              <div className="text-sm font-medium">
                 <Badge
-                  className={`flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0 ${statusColor}`}
+                  className={`flex w-auto gap-1 border-0 p-1 px-2 font-medium uppercase shadow-sm ${statusColor}`}
                 >
                   <span>{transformStatusEnum(task.status)}</span>
                 </Badge>
               </div>
 
               {/* Task Priority */}
-              <div className='text-sm ml-2'>
+              <div className="ml-2 text-sm">
                 <Badge
-                  className={`flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0 ${priorityColor}`}
+                  className={`flex w-auto gap-1 border-0 p-1 px-2 font-medium uppercase shadow-sm ${priorityColor}`}
                 >
                   <span>{transformStatusEnum(task.priority)}</span>
                 </Badge>
               </div>
 
               {/* Assignee */}
-              <div className='flex items-center space-x-2 ml-2'>
+              <div className="ml-2 flex items-center space-x-2">
                 <div
-                  className={`hidden sm:flex items-center justify-center rounded-full p-2 size-8 text-sm ${avatarColor}`}
+                  className={`hidden size-8 items-center justify-center rounded-full p-2 text-sm sm:flex ${avatarColor}`}
                 >
                   {initials}
                 </div>

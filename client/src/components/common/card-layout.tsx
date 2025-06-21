@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils";
+
 import {
   Card,
   CardContent,
@@ -8,6 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { cn } from "@/lib/utils";
 
 type CardLayoutProps = {
   children: React.ReactNode;
@@ -25,16 +27,16 @@ export const CardLayout: React.FC<CardLayoutProps> = ({
   className,
 }) => {
   return (
-    <Card className={cn("min-w-[350px] max-w-[700px]", className)}>
+    <Card className={cn("max-w-[700px] min-w-[350px]", className)}>
       <CardHeader>
-        <CardTitle className='text-2xl md:text-3xl font-bold text-center'>
+        <CardTitle className="text-center text-2xl font-bold md:text-3xl">
           {header}
         </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent>{children}</CardContent>
       {footer && (
-        <CardFooter className='flex justify-center text-sm text-muted-foreground'>
+        <CardFooter className="text-muted-foreground flex justify-center text-sm">
           {footer}
         </CardFooter>
       )}

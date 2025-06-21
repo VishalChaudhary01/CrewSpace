@@ -1,4 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
 import {
   getAllTasksQueryFn,
   getAllWorkspacesUserIsMemberQueryFn,
@@ -9,22 +10,22 @@ import {
   getProjectsInWorkspaceQueryFn,
   getWorkspaceWithMembersQueryFn,
 } from "@/lib/api";
-import type {
-  AllWorkspacesResponse,
-  GetMembersInWorkspaceResponse,
-  WorkspaceRequest,
-  WorkspaceWithMembersResponse,
-} from "@/types/workspace.type";
-import type { CustomError } from "@/types/error.type";
-import type { UserResponse } from "@/types/user.type";
 import type { AnalyticsResponse } from "@/types/common.type";
-import type { AllTaskRequest, AllTaskResponse } from "@/types/task.type";
+import type { CustomError } from "@/types/error.type";
 import type {
   AllProjectRequest,
   AllProjectResponse,
   ProjectRequest,
   ProjectResponse,
 } from "@/types/project.type";
+import type { AllTaskRequest, AllTaskResponse } from "@/types/task.type";
+import type { UserResponse } from "@/types/user.type";
+import type {
+  AllWorkspacesResponse,
+  GetMembersInWorkspaceResponse,
+  WorkspaceRequest,
+  WorkspaceWithMembersResponse,
+} from "@/types/workspace.type";
 
 export const useAuth = () => {
   const query = useQuery<UserResponse, CustomError>({

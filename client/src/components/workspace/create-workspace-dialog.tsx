@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createWorkspaceMutationFn } from "@/lib/api";
-import { useCreateWorkspaceDialog } from "@/hooks/dialog";
-import type { CreateWorkspaceInput } from "@/types/workspace.type";
-import { createWorkspaceSchema } from "@/validators/workspace.validator";
+import { toast } from "sonner";
+
+import { DialogLayout } from "@/components/common/dialog-layout";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,9 +17,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { DialogLayout } from "@/components/common/dialog-layout";
+
+import { useCreateWorkspaceDialog } from "@/hooks/dialog";
+import { createWorkspaceMutationFn } from "@/lib/api";
+import type { CreateWorkspaceInput } from "@/types/workspace.type";
+import { createWorkspaceSchema } from "@/validators/workspace.validator";
 
 export const CreateWorkspaceDialog = () => {
   const navigate = useNavigate();
@@ -66,18 +68,18 @@ export const CreateWorkspaceDialog = () => {
     <DialogLayout
       open={open}
       onClose={onClose}
-      header='Create New Workspace'
-      description='Boost your productivity by making it easier for everyone to access
-            projects in one location.'
+      header="Create New Workspace"
+      description="Boost your productivity by making it easier for everyone to access
+            projects in one location."
       footer={
         <Button
-          type='submit'
+          type="submit"
           disabled={isPending}
-          form='create-workspace-form'
-          className='w-full'
+          form="create-workspace-form"
+          className="w-full"
         >
           {isPending ? (
-            <Loader className='size-4 animate-spin' />
+            <Loader className="size-4 animate-spin" />
           ) : (
             "Create Workspace"
           )}
@@ -86,21 +88,21 @@ export const CreateWorkspaceDialog = () => {
     >
       <Form {...form}>
         <form
-          id='create-workspace-form'
+          id="create-workspace-form"
           onSubmit={form.handleSubmit(onSubmit)}
-          className='space-y-6'
+          className="space-y-6"
         >
-          <div className='space-y-4'>
+          <div className="space-y-4">
             <FormField
               control={form.control}
-              name='name'
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='text-sm'>Workspace name</FormLabel>
+                  <FormLabel className="text-sm">Workspace name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='Enter name of your new workspace'
-                      className='!h-[48px]'
+                      placeholder="Enter name of your new workspace"
+                      className="!h-[48px]"
                       {...field}
                     />
                   </FormControl>
@@ -110,16 +112,16 @@ export const CreateWorkspaceDialog = () => {
             />
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='text-sm'>
+                  <FormLabel className="text-sm">
                     Workspace Description
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       rows={6}
-                      placeholder='Enter description of your new workspace'
+                      placeholder="Enter description of your new workspace"
                       {...field}
                     />
                   </FormControl>

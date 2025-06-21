@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
+
+import { Button } from "../ui/button";
 import {
   FormControl,
   FormField,
@@ -10,7 +12,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 
 interface PasswordInputProps {
   form: UseFormReturn<any>;
@@ -34,7 +35,7 @@ export const PasswordInput = ({
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <div className='relative'>
+          <div className="relative">
             <FormControl>
               <Input
                 type={showPassword ? "text" : "password"}
@@ -43,10 +44,10 @@ export const PasswordInput = ({
               />
             </FormControl>
             <Button
-              type='button'
-              variant='ghost'
-              size='sm'
-              className='absolute top-0.5 right-0.5'
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="absolute top-0.5 right-0.5"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <Eye /> : <EyeOff />}

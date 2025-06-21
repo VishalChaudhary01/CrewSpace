@@ -1,6 +1,6 @@
+import { cn, getAvatarColor, getAvatarText } from "@/lib/utils";
 import type { Project } from "@/types/project.type";
 import type { Member } from "@/types/workspace.type";
-import { cn, getAvatarColor, getAvatarText } from "@/lib/utils";
 
 export const getProjectOptions = (projects: Project[]) => {
   const projectOptions = projects?.map((project) => {
@@ -21,10 +21,10 @@ export const getMemberOptions = (members: Member[]) => {
 
     return {
       label: (
-        <div className='flex items-center space-x-2'>
+        <div className="flex items-center space-x-2">
           <div
             className={cn(
-              "w-6 rounded-full p-1 flex items-center justify-center",
+              "flex w-6 items-center justify-center rounded-full p-1",
               avatarColor,
             )}
           >

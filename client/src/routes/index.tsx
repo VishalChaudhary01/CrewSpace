@@ -1,13 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { AuthRoute } from "./auth.route";
 import {
   authenticationRoutePaths,
   baseRoutePaths,
   protectedRoutePaths,
 } from "./comman/routes";
-import { AuthRoute } from "./auth.route";
 import { ProtectedRoute } from "./protected.route";
-import { BaseLayout } from "@/layouts/base.layout";
+
 import { AppLayout } from "@/layouts/app.layout";
+import { BaseLayout } from "@/layouts/base.layout";
 import { NotFoundPage } from "@/pages/error/not-found.page";
 
 export const AppRoutes = () => {
@@ -19,7 +21,7 @@ export const AppRoutes = () => {
             <Route key={route.path} path={route.path} element={route.element} />
           ))}
         </Route>
-        <Route path='/' element={<AuthRoute />}>
+        <Route path="/" element={<AuthRoute />}>
           <Route element={<BaseLayout />}>
             {authenticationRoutePaths.map((route) => (
               <Route
@@ -30,7 +32,7 @@ export const AppRoutes = () => {
             ))}
           </Route>
         </Route>
-        <Route path='/' element={<ProtectedRoute />}>
+        <Route path="/" element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             {protectedRoutePaths.map((route) => (
               <Route
@@ -41,7 +43,7 @@ export const AppRoutes = () => {
             ))}
           </Route>
         </Route>
-        <Route path='*' element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

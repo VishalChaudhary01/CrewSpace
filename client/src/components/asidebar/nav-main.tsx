@@ -6,15 +6,17 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuthContext } from "@/contexts/auth.context";
-import { Permissions } from "@/constants";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
+
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
+import { Permissions } from "@/constants";
+import { useAuthContext } from "@/contexts/auth.context";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
 type ItemType = {
   title: string;
@@ -67,7 +69,7 @@ export function NavMain() {
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton isActive={item.url === pathname} asChild>
-              <Link to={item.url} className='!text-[15px]'>
+              <Link to={item.url} className="!text-[15px]">
                 <item.icon />
                 <span>{item.title}</span>
               </Link>

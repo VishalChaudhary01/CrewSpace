@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { Loader, MoreHorizontal } from "lucide-react";
-import type { Row } from "@tanstack/react-table";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Task } from "@/types/task.type";
-import { deleteTaskMutationFn } from "@/lib/api";
-import { useConfirmDialog } from "@/hooks/dialog";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import type { Row } from "@tanstack/react-table";
+import { Loader, MoreHorizontal } from "lucide-react";
+import { toast } from "sonner";
+
+import { DialogLayout } from "@/components/common/dialog-layout";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,7 +14,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DialogLayout } from "@/components/common/dialog-layout";
+
+import { useConfirmDialog } from "@/hooks/dialog";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { deleteTaskMutationFn } from "@/lib/api";
+import { cn } from "@/lib/utils";
+import type { Task } from "@/types/task.type";
 
 interface DataTableRowActionsProps {
   row: Row<Task>;
@@ -62,15 +64,15 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant='ghost'
-            className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
+            variant="ghost"
+            className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
           >
             <MoreHorizontal />
-            <span className='sr-only'>Open menu</span>
+            <span className="sr-only">Open menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='end' className='w-[160px]'>
-          <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem className="cursor-pointer">
             Edit Task
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -88,14 +90,14 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         open={open}
         onClose={onClose}
         header={`Delete Task ${taskCode}`}
-        description='Are you sure you want to delete.'
+        description="Are you sure you want to delete."
       >
-        <div className='flex gap-4 justify-center'>
-          <Button type='button' variant='outline' onClick={onClose}>
+        <div className="flex justify-center gap-4">
+          <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button disabled={isPending} type='button' onClick={handleDelete}>
-            {isPending ? <Loader className='size-4 animate-spin' /> : "Delete"}
+          <Button disabled={isPending} type="button" onClick={handleDelete}>
+            {isPending ? <Loader className="size-4 animate-spin" /> : "Delete"}
           </Button>
         </div>
       </DialogLayout>
