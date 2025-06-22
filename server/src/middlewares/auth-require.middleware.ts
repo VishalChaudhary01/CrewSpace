@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyJwt } from "@/utils/jwt";
+
 import { config } from "@/config/env.config";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
+import { verifyJwt } from "@/utils/jwt";
 
 export const authRequire = async (
   req: Request,

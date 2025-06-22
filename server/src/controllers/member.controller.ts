@@ -1,9 +1,11 @@
+import { Request, Response } from "express";
+
+import { getUserId } from "./user.controller";
+
 import { StatusCode } from "@/config/http.config";
 import { joinWorkspaceByInviteService } from "@/services/member.service";
-import { inviteCodeSchema } from "@/validators/common.validator";
-import { Request, Response } from "express";
-import { getUserId } from "./user.controller";
 import { logger } from "@/utils/logger";
+import { inviteCodeSchema } from "@/validators/common.validator";
 
 export const joinWorkSpace = async (req: Request, res: Response) => {
   const userId = getUserId(req);

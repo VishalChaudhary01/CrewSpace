@@ -1,12 +1,14 @@
 import { Router } from "express";
+
 import authRoutes from "./auth.route";
-import userRoutes from "./user.route";
-import { authLimiter } from "@/utils/limiter";
-import workspaceRoutes from "./workspace.route";
-import { authRequire } from "@/middlewares/auth-require.middleware";
+import memberRoutes from "./member.route";
 import projectRoutes from "./project.workspace";
 import taskRoutes from "./task.routes";
-import memberRoutes from "./member.route";
+import userRoutes from "./user.route";
+import workspaceRoutes from "./workspace.route";
+
+import { authRequire } from "@/middlewares/auth-require.middleware";
+import { authLimiter } from "@/utils/limiter";
 
 const v1Routes = Router();
 

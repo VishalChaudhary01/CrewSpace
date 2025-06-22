@@ -1,5 +1,6 @@
-import { PermissionType } from "@/enums/role.enum";
 import { RolePermissions } from "./role-premissions";
+
+import { PermissionType } from "@/enums/role.enum";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
 
 export const roleGuard = (

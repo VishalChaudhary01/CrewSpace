@@ -1,4 +1,7 @@
 import { Request, Response } from "express";
+
+import { getUserId } from "./user.controller";
+
 import { StatusCode } from "@/config/http.config";
 import { Permissions } from "@/enums/role.enum";
 import { getMemberRoleInWorkspaceService } from "@/services/member.service";
@@ -12,6 +15,7 @@ import {
   updateWorkspaceByIdService,
   deleteWorkspaceService,
 } from "@/services/workspace.service";
+import { logger } from "@/utils/logger";
 import { roleGuard } from "@/utils/roleGuard";
 import { idSchema } from "@/validators/common.validator";
 import {
@@ -19,8 +23,6 @@ import {
   createWorkspaceSchema,
   updateWorkspaceSchema,
 } from "@/validators/workspace.validator";
-import { logger } from "@/utils/logger";
-import { getUserId } from "./user.controller";
 
 export const createWorkspace = async (req: Request, res: Response) => {
   const userId = getUserId(req);

@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { descriptionSchema, idSchema, nameSchema } from "./common.validator";
 
 export const createWorkspaceSchema = z.object({

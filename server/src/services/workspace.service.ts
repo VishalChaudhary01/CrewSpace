@@ -1,22 +1,24 @@
 import mongoose from "mongoose";
-import { TaskModel } from "@/models/task.model";
-import { RoleModel } from "@/models/role.model";
-import { UserModel } from "@/models/user.model";
-import { MemberModel } from "@/models/member.model";
-import { ProjectModel } from "@/models/project.model";
-import { WorkspaceDocument, WorkspaceModel } from "@/models/wrokspace.model";
+
+import { getUserByIdService } from "./user.service";
+
 import { Roles } from "@/enums/role.enum";
 import { TaskStatus } from "@/enums/task.enum";
 import { AppError } from "@/errors/app.error";
+import { BadRequestError } from "@/errors/bad-request.error";
 import { NotFoundError } from "@/errors/not-found.error";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
+import { MemberModel } from "@/models/member.model";
+import { ProjectModel } from "@/models/project.model";
+import { RoleModel } from "@/models/role.model";
+import { TaskModel } from "@/models/task.model";
+import { UserModel } from "@/models/user.model";
+import { WorkspaceDocument, WorkspaceModel } from "@/models/wrokspace.model";
 import { logError } from "@/utils/logger";
 import {
   CreateWorkspaceDto,
   UpdateWorkspaceDto,
 } from "@/validators/workspace.validator";
-import { getUserByIdService } from "./user.service";
-import { BadRequestError } from "@/errors/bad-request.error";
 
 // GET WORKSPACE BY ID -> utils
 export const getWorkspaceByIdService = async (workspaceId: string) => {

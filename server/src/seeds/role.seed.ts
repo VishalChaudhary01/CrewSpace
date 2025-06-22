@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+
 import { RoleModel } from "@/models/role.model";
-import { RolePermissions } from "@/utils/role-premissions";
 import { logError, logger } from "@/utils/logger";
+import { RolePermissions } from "@/utils/role-premissions";
 
 export const seedRoles = async () => {
   const existingRoles = await RoleModel.countDocuments();

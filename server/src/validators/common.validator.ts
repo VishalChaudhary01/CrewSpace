@@ -1,5 +1,6 @@
-import { TaskPriority, TaskStatus } from "@/enums/task.enum";
 import { z } from "zod";
+
+import { TaskPriority, TaskStatus } from "@/enums/task.enum";
 
 // Email schema
 export const emailSchema = z

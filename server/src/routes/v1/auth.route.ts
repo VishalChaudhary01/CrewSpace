@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { signin, signup, signout } from "@/controllers/auth.controller";
 import { authRequire } from "@/middlewares/auth-require.middleware";
 

@@ -1,9 +1,10 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import express, { Request, Response } from "express";
 import helmet from "helmet";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import { errorHandler } from "./middlewares/error-handler.middleware";
+
 import { config } from "./config/env.config";
+import { errorHandler } from "./middlewares/error-handler.middleware";
 import v1Routes from "./routes/v1";
 import { baseLimiter } from "./utils/limiter";
 

@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+
 import { RoleDocument } from "./role.model";
 
 export interface MemberDocument extends Document {

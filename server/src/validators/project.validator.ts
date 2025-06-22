@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { descriptionSchema, nameSchema } from "./common.validator";
 
 export const createProjectSchema = z.object({

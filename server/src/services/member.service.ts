@@ -1,11 +1,12 @@
-import { Roles } from "@/enums/role.enum";
-import { RoleModel } from "@/models/role.model";
-import { MemberModel } from "@/models/member.model";
-import { WorkspaceModel } from "@/models/wrokspace.model";
 import { getWorkspaceByIdService } from "./workspace.service";
-import { NotFoundError } from "@/errors/not-found.error";
+
+import { Roles } from "@/enums/role.enum";
 import { BadRequestError } from "@/errors/bad-request.error";
+import { NotFoundError } from "@/errors/not-found.error";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
+import { MemberModel } from "@/models/member.model";
+import { RoleModel } from "@/models/role.model";
+import { WorkspaceModel } from "@/models/wrokspace.model";
 
 export const getMemberRoleInWorkspaceService = async (
   userId: string,

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ZodError } from "zod";
 import { ErrorRequestHandler } from "express";
-import { AppError } from "@/errors/app.error";
+import { ZodError } from "zod";
+
 import { StatusCode } from "@/config/http.config";
+import { AppError } from "@/errors/app.error";
 import { formatZodError } from "@/utils/format-zod-error";
 import { getErrorMessage } from "@/utils/get-error-message";
 import { logError } from "@/utils/logger";

@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
+
 import { getUserId } from "./user.controller";
+
 import { StatusCode } from "@/config/http.config";
 import { Permissions } from "@/enums/role.enum";
-import { logger } from "@/utils/logger";
-import { roleGuard } from "@/utils/roleGuard";
-import { idSchema } from "@/validators/common.validator";
-import {
-  createProjectSchema,
-  updateProjectSchema,
-} from "@/validators/project.validator";
+import { getMemberRoleInWorkspaceService } from "@/services/member.service";
 import {
   createProjectService,
   deleteProjectService,
@@ -17,7 +13,13 @@ import {
   getProjectsInWorkspaceService,
   updateProjectService,
 } from "@/services/project.service";
-import { getMemberRoleInWorkspaceService } from "@/services/member.service";
+import { logger } from "@/utils/logger";
+import { roleGuard } from "@/utils/roleGuard";
+import { idSchema } from "@/validators/common.validator";
+import {
+  createProjectSchema,
+  updateProjectSchema,
+} from "@/validators/project.validator";
 
 export const createProject = async (req: Request, res: Response) => {
   const userId = getUserId(req);
@@ -28,7 +30,9 @@ export const createProject = async (req: Request, res: Response) => {
   roleGuard(role, [Permissions.CREATE_PROJECT]);
 
   logger.info(
-    `Creating project for  user ${userId} in workspace ${workspaceId}`,
+    `Creating project for  user ${userId} 
+    
+    in workspace ${workspaceId}`,
   );
 
   const { project } = await createProjectService(userId, workspaceId, data);

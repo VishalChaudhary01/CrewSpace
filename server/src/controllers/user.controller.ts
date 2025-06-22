@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { logger } from "@/utils/logger";
+
 import { StatusCode } from "@/config/http.config";
 import { UnauthorizedError } from "@/errors/unauthorize.error";
 import { getCurrentUserService } from "@/services/user.service";
+import { logger } from "@/utils/logger";
 
 // get user id utils
 export const getUserId = (req: Request): string => {

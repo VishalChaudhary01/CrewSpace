@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
+
 import { StatusCode } from "@/config/http.config";
+import { signinService, signupService } from "@/services/auth.service";
 import {
   clearAuthenticationCookies,
   setAuthenticationCookies,
 } from "@/utils/cookie";
 import { signJwt } from "@/utils/jwt";
-import { signinService, signupService } from "@/services/auth.service";
-import { signinSchema, signupSchema } from "@/validators/auth.validator";
 import { logger } from "@/utils/logger";
+import { signinSchema, signupSchema } from "@/validators/auth.validator";
 
 export const signup = async (req: Request, res: Response) => {
   const data = signupSchema.parse(req.body);

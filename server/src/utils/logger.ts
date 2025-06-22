@@ -1,5 +1,6 @@
 import "winston-daily-rotate-file";
 import { createLogger, format, transports } from "winston";
+
 import { config } from "@/config/env.config";
 
 const { combine, timestamp, errors, printf } = format;

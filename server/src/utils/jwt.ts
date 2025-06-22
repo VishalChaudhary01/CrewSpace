@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import jwt, { SignOptions } from "jsonwebtoken";
+
 import { config } from "@/config/env.config";
 
 type Unit = "s" | "M" | "H" | "D";

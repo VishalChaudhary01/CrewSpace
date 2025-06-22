@@ -1,14 +1,10 @@
-import { StatusCode } from "@/config/http.config";
 import { Request, Response } from "express";
+
 import { getUserId } from "./user.controller";
-import { idSchema } from "@/validators/common.validator";
-import { getMemberRoleInWorkspaceService } from "@/services/member.service";
-import { roleGuard } from "@/utils/roleGuard";
+
+import { StatusCode } from "@/config/http.config";
 import { Permissions } from "@/enums/role.enum";
-import {
-  createTaskSchema,
-  updateTaskSchema,
-} from "@/validators/task.validator";
+import { getMemberRoleInWorkspaceService } from "@/services/member.service";
 import {
   createTaskService,
   deleteTaskService,
@@ -17,6 +13,12 @@ import {
   updateTaskService,
 } from "@/services/task.service";
 import { logger } from "@/utils/logger";
+import { roleGuard } from "@/utils/roleGuard";
+import { idSchema } from "@/validators/common.validator";
+import {
+  createTaskSchema,
+  updateTaskSchema,
+} from "@/validators/task.validator";
 
 export const createTask = async (req: Request, res: Response) => {
   const userId = getUserId(req);

@@ -1,4 +1,5 @@
 import { CookieOptions, Response } from "express";
+
 import { config } from "@/config/env.config";
 
 const cookieOptions: CookieOptions = {

@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
+
+import { TaskStatus } from "@/enums/task.enum";
+import { AppError } from "@/errors/app.error";
+import { NotFoundError } from "@/errors/not-found.error";
 import { ProjectModel } from "@/models/project.model";
+import { TaskModel } from "@/models/task.model";
 import {
   CreateProjectDto,
   UpdateProjectDto,
 } from "@/validators/project.validator";
-import { NotFoundError } from "@/errors/not-found.error";
-import { TaskModel } from "@/models/task.model";
-import { TaskStatus } from "@/enums/task.enum";
-import { AppError } from "@/errors/app.error";
 
 // Get project-service, utils
 export const getProjectService = async (

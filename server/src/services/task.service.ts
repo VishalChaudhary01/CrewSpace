@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getProjectService } from "./project.service";
+
 import { TaskPriority, TaskStatus } from "@/enums/task.enum";
 import { BadRequestError } from "@/errors/bad-request.error";
 import { NotFoundError } from "@/errors/not-found.error";
 import { MemberModel } from "@/models/member.model";
 import { TaskModel } from "@/models/task.model";
 import { CreateTaskDto, UpdateTaskDto } from "@/validators/task.validator";
-import { getProjectService } from "./project.service";
 
 export const createTaskService = async (
   workspaceId: string,
