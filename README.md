@@ -2,7 +2,7 @@
 
 CrewSpace is a powerful **Project Management Platform** built with the **MERN stack** and **TypeScript**, tailored for modern teams. Designed with **multi-tenancy**, **role-based access control**, and **real-time communication patterns**, it enables organizations to manage workspaces, projects, and tasks with enterprise-grade reliability and developer-friendly architecture.
 
-### [Live Demo](https://crew-space.vercel.app)
+### [Live Demo](https://crew-space.vercel.app)  |  [Demo Video](https://www.loom.com/share/7467103d1d5147a2bda50db0a7521509)
 
 ## 🌟 Highlight Features
 
