@@ -1,0 +1,31 @@
+# === General ===
+node_modules
+pnpm-lock.yaml
+npm-debug.log
+yarn-error.log
+.DS_Store
+logs
+*.log
+
+# === Secrets and config ===
+.env
+.env.local
+.env.*.local
+
+# === Git ===
+.git
+.gitignore
+
+# === OS / Editor / IDE ===
+.vscode
+.idea
+*.swp
+
+# === Build output ===
+dist
+build
+*.tsbuildinfo
+
+# === Docker ===
+Dockerfile
+.dockerignore
