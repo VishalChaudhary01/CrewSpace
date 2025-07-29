@@ -1,43 +1,24 @@
 # 🚀 CrewSpace | Team Collaboration & Project Management Platform
 
-CrewSpace is a powerful **Project Management Platform** built with the **MERN stack** and **TypeScript**, tailored for modern teams. Designed with **multi-tenancy**, **role-based access control**, and **real-time communication patterns**, it enables organizations to manage workspaces, projects, and tasks with enterprise-grade reliability and developer-friendly architecture.
+CrewSpace is a powerful Team Collaboration and Project Management Platform built with the MERN stack and TypeScript, tailored for modern teams. It enables organizations to manage their workspaces, projects, and tasks with fine-grained, role-based access control.
 
 ### [Live Demo](https://crew-space.vercel.app)  |  [Demo Video](https://www.loom.com/share/7467103d1d5147a2bda50db0a7521509)
 
-## 🌟 Highlight Features
+## 🌟 Features
 
-### 🏢 Multi-Tenant Architecture
-
-- **Isolated Workspaces** — Organize teams and projects under secure, segregated environments.
-- **Custom Role-Based Access Control (RBAC)** — Owner, Admin, Member hierarchy with scoped permissions.
-- **Workspace Invitations** — Invite users via email with email verification.
-
-### 📁 Project & Task Management
-
-- **Project-Epic-Task Hierarchy** — Clear separation for scalable planning.
-- **Dynamic Task Workflows** — Statuses: `BACKLOG`, `TODO`, `IN_PROGRESS`, `IN_REVIEW`, `DONE`.
-- **Priority Levels** — Task priorities: `LOW`, `MEDIUM`, `HIGH`.
-- **Assignee Management** — Assign members and track responsibilities.
-
-### 🔐 Security & Performance
-
-- **JWT Auth with Secure Cookies** — Token-based sessions with HTTP-only, SameSite flags.
-- **Rate Limiting (express-rate-limit)** — Protects against brute force & DoS attacks.
-- **Input Validation** — Sanitization & schema validation using Zod.
-- **Helmet** — Sets secure HTTP headers.
-
-### 🧪 Developer & Ops Tooling
-
-- **Type-Safe End-to-End** — Full-stack TypeScript across frontend & backend.
-- **Mongoose Transactions** — Atomic operations for critical business logic.
-- **BullMQ + Redis** — Background jobs for emails, notifications, and async workflows.
-- **Structured Logging (Winston)** — Persistent logs with timestamps and request metadata.
-
-### 📊 UI & UX
-
-- **Advanced Filtering & Sorting** — Filter by assignee, priority, status.
-- **Pagination & Lazy Loading** — Optimized performance for large datasets.
-- **Responsive UI** — Mobile-first with TailwindCSS and Shadcn UI components.
+- Isolated workspaces for separate teams and users
+- Role-based access control (RBAC) with fine-grained permissions
+- Secure team onboarding via invitation links
+- Task & project management for collaborative workflows
+- JWT authentication with secure, HTTP-only cookies
+- Rate limiting using express-rate-limit to prevent brute-force and abuse
+- Server-side input validation to ensure clean and safe data
+- Centralized error handling with custom error classes
+- Server-side filtering, searching, and pagination for optimized queries
+- Logging and monitoring for better observability and debugging
+- Fully Dockerized setup for easy local development
+- Unit testing for utility functions and core logic (Working...)
+- Integration testing for key API flows (Working...)
 
 ## ⚙️ Tech Stack
 
@@ -65,6 +46,30 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
   cd CrewSpace
 ```
 
+## 🐳 With Docker 
+
+### 🧾 Create .env file for server
+
+```bash
+  cd server
+  cp .env.example .env
+```
+
+### 🧾 Create .env file for client
+
+```bash
+  cd client
+  cp .env.example .env
+```
+
+### 🔨 Build and run docker container from root
+
+```bash
+  docker-compose up --build
+```
+
+## ⚙️ Manual Setup, Without Docker
+
 ### 🧩 Backend Setup
 
 ```bash
@@ -73,11 +78,11 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
   cp .env.example .env
 ```
 
-> **Note:** Add MONGODB_URI and other environment variables.
+> **Note:** Update environment variables from your's.
 
 ```bash
-  pnpm run seed:role  # Seed role data in database
-  pnpm run dev        # Start server on http://localhost:5000
+  pnpm seed:role  # Seed role data in database
+  pnpm dev        # Start server on http://localhost:5000
 ```
 
 ### 💻 Frontend Setup
@@ -88,10 +93,10 @@ CrewSpace is a powerful **Project Management Platform** built with the **MERN st
   cp .env.example .env
 ```
 
-> **Note:** Add VITE_API_BASE_URL frontend environment variables.
+> **Note:** Update environment variables form your's.
 
 ```bash
-  pnpm run dev        # Open on http://localhost:5173
+  pnpm dev        # Open on http://localhost:5173
 ```
 
 ## 📫 Contact
