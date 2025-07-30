@@ -10,7 +10,7 @@ on:
 jobs:
   ci:
     name: Lint, Format, and Test (Server & Client)
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout code
