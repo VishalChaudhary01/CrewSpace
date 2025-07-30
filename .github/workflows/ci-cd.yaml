@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint, Format, and Test (Server & Client)
+    run-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      #====== Server Steps ======#
+      - name: Install server dependencies
+        working-directory: server
+        run: pnpm install
+
+      - name: Lint Server
+        working-directory: server
+        run: pnpm lint
+
+      - name: Check server format
+        working-directory: server
+        run: pnpm format:check
+
+      - name: Test Server
+        working-directory: server
+        run: pnpm test
+
+      #======= Client Setup ======#
+      - name: Install client dependencies
+        working-directory: client
+        run: pnpm install
+
+      - name: Lint client
+        working-directory: client
+        run: pnpm lint
+
+      - name: Check client format
+        working-directory: client
+        run: pnpm format:check

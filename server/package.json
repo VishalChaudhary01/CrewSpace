@@ -5,7 +5,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "pnpm clean && tsc",
-    "lint": "eslint",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "start": "dotenv -- node dist/index.js",
     "dev": "dotenv -- tsc-watch --onsuccess \"node dist/index.js\"",
     "test": "jest",
