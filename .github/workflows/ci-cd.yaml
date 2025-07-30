@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       #====== Server Steps ======#
       - name: Install server dependencies
         working-directory: server
