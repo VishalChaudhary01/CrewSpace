@@ -11,7 +11,8 @@
     "start": "dotenv -- node dist/index.js",
     "dev": "dotenv -- tsc-watch --onsuccess \"node dist/index.js\"",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "Vishal Chaudhary",
