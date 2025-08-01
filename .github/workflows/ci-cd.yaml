@@ -41,6 +41,10 @@ jobs:
         working-directory: server
         run: pnpm test
 
+      - name: Code coverage thresholds
+        working-directory: server
+        run: pnpm test:coverage
+
       #======= Client Setup ======#
       - name: Install client dependencies
         working-directory: client
