@@ -12,12 +12,16 @@ export default {
   transform: {
     "^.+\\.ts?$": "ts-jest",
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
+
+  testMatch: ["**tests/unit/**/*.test.ts", "**/tests/integration/**/*.test.ts"],
+
   moduleFileExtensions: ["ts", "js", "json", "node"],
   modulePaths: [compilerOptions.baseUrl],
+
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: "<rootDir>/",
   }),
+
   coverageThreshold: {
     global: {
       branches: 70,

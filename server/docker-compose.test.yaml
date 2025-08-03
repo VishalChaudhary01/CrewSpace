@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  mongodb-test:
+    image: mongo:6.0
+    container_name: crew-space-test-db
+    ports:
+      - "27017:27017"
+    command: ["--replSet", "rs0"]
+    healthcheck:
+      test: test $$(mongosh --quiet --eval "db.adminCommand('ping').ok") -eq 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mongo-init-replica:
+    image: mongo:6.0
+    depends_on:
+      mongodb-test:
+        condition: service_healthy
+    entrypoint: >
+      bash -c "
+        echo 'Initiating MongoDB Replica Set...' &&
+        mongosh --host mongodb-test:27017 --eval '
+          rs.initiate({
+            _id: \"rs0\",
+            members: [{ _id: 0, host: \"mongodb-test:27017\" }]
+          })' &&
+        echo 'Replica Set Initialized'
+      "
+    restart: "no"
+
+volumes:
+  crew-space-data:
