@@ -17,8 +17,9 @@ CrewSpace is a powerful Team Collaboration and Project Management Platform built
 - Server-side filtering, searching, and pagination for optimized queries
 - Logging and monitoring for better observability and debugging
 - Fully Dockerized setup for easy local development
-- Unit testing for utility functions and core logic (Working...)
-- Integration testing for key API flows (Working...)
+- Unit testing for utility functions and core logic
+- Integration testing for key API flows - TODO
+- CI/CD Pipeline using github action
 
 ## ⚙️ Tech Stack
 
